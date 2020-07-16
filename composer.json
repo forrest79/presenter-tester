@@ -1,5 +1,5 @@
 {
-	"name": "mangoweb/presenter-tester",
+	"name": "forrest79/presenter-tester",
 	"license": "MIT",
 	"require": {
 		"php": "~7.1",

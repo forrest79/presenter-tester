@@ -1,6 +1,7 @@
 Mango Presenter Tester
 ======
-[![Build Status](https://travis-ci.org/mangoweb-backend/presenter-tester.svg?branch=master)](https://travis-ci.org/mangoweb-backend/presenter-tester)
+** Fork just for personal use :-) **
+
 
 Testing tool for Nette presenter with easy to use API.
 
@@ -64,7 +65,7 @@ $testRequest = $presenterTester->createRequest('Admin:Article')
 		'id' => 1,
 	]);
 $testResult = $presenterTester->execute($testRequet);
-$testResult->assertRenders('%A%Hello world article editation%A%');	
+$testResult->assertRenders('%A%Hello world article editation%A%');
 ```
 
 As you can see, you first create a `TestPresenterRequest` using `createRequest` method on `PresenterTester`. You pass a presenter name (without an action) and later you configure the test request. You can set additional request parameters like `action` or your own application parameters. There are many other things you can configure on the request, like form values or headers.
@@ -82,7 +83,7 @@ TestPresenterRequest API
 Set application request parameters.
 
 ### `withForm(string $formName, array $post, array $files)`
-Add form submission data to request. You have to specify full component tree path to in `$formName`. 
+Add form submission data to request. You have to specify full component tree path to in `$formName`.
 
 Presenter Tester supports forms with CSRF protection, but since it uses session, it is recommended to install [mangoweb/tester-http-mocks](https://github.com/mangoweb-backend/tester-http-mocks) package.
 
@@ -127,7 +128,7 @@ Checks that request redirects to given presenter. You can also pass parameters t
 ### `assertRedirectsUrl($url)`
 ### `assertFormValid($formName)`
 ### `assertFormHasErrors($formName, $formErrors)`
- 
+
 -----
 Also, there are methods like `getResponse` or `getPresenter` to access original data a perform some custom checks.
 

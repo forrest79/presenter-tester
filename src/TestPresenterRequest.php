@@ -1,13 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Mangoweb\Tester\PresenterTester;
+namespace Forrest79\Tester\PresenterTester;
 
 use Nette\Forms\Controls\CsrfProtection;
 use Nette\Http\Session;
 use Nette\Security\IIdentity;
 use Nette\SmartObject;
-use Nextras\Application\UI\Helpers as NextrasSecuredHelpers;
-
 
 /**
  * Immutable object
@@ -16,51 +14,38 @@ class TestPresenterRequest
 {
 	use SmartObject;
 
-	/** @var string */
-	private $methodName = 'GET';
+	private Session $session;
 
-	/** @var array */
-	private $headers = [];
+	private string $presenterName;
 
-	/** @var string */
-	private $presenterName;
+	private ?PresenterTester $presenterTester;
 
-	/** @var array */
-	private $parameters = [];
+	private string $methodName = 'GET';
 
-	/** @var array */
-	private $post = [];
+	private array $headers = [];
 
-	/** @var string|NULL */
-	private $rawBody;
+	private array $parameters = [];
 
-	/** @var array */
-	private $files = [];
+	private array $post = [];
 
-	/** @var bool */
-	private $ajax = false;
+	private ?string $rawBody = NULL;
 
-	/** @var NULL|string */
-	private $componentClass;
+	private array $files = [];
 
-	/** @var bool */
-	private $shouldHaveIdentity = false;
+	private bool $ajax = false;
 
-	/** @var IIdentity|NULL */
-	private $identity;
+	private bool $shouldHaveIdentity = FALSE;
 
-	/** @var Session */
-	private $session;
+	private ?IIdentity $identity = NULL;
 
 
-	public function __construct(string $presenterName, Session $session)
+	public function __construct(string $presenterName, Session $session, ?PresenterTester $presenterTester = NULL)
 	{
-		if ($session instanceof \Mangoweb\Tester\HttpMocks\Session) {
-			$session->setFakeId('mango.id');
-		}
-		$session->getSection(CsrfProtection::class)->token = 'mango.token';
 		$this->presenterName = $presenterName;
 		$this->session = $session;
+		$this->presenterTester = $presenterTester;
+
+		$session->getSection(CsrfProtection::class)->token = 'mango.token';
 	}
 
 
@@ -112,12 +97,6 @@ class TestPresenterRequest
 	}
 
 
-	public function getComponentClass(): ?string
-	{
-		return $this->componentClass;
-	}
-
-
 	public function shouldHaveIdentity(): bool
 	{
 		return $this->shouldHaveIdentity;
@@ -130,32 +109,13 @@ class TestPresenterRequest
 	}
 
 
-	/**
-	 * @param string $signal
-	 * @param array $componentParameters
-	 * @param string|NULL $componentClass required for a secured signal
-	 * @return TestPresenterRequest
-	 */
-	public function withSignal(string $signal, array $componentParameters = [], string $componentClass = null): TestPresenterRequest
+	public function withSignal(string $signal, array $componentParameters = []): TestPresenterRequest
 	{
 		assert(!isset($this->parameters['do']));
 		$request = clone $this;
-		$request->componentClass = $componentClass;
 		$request->parameters['do'] = $signal;
 		$lastDashPosition = strrpos($signal, '-');
 		$componentName = $lastDashPosition !== false ? substr($signal, 0, $lastDashPosition) : '';
-
-		if ($componentClass && class_exists(NextrasSecuredHelpers::class)) {
-			$csrfToken = NextrasSecuredHelpers::getCsrfToken(
-				$this->session,
-				$componentClass,
-				'handle' . lcfirst(substr($signal, $lastDashPosition ? $lastDashPosition + 1 : 0)),
-				[$componentName, array_map(function ($param) {
-					return is_object($param) && method_exists($param, 'getId') ? $param->getId() : $param;
-				}, $componentParameters)]
-			);
-			$componentParameters['_sec'] = $csrfToken;
-		}
 
 		if ($componentName !== '') {
 			$newParameters = [];
@@ -255,6 +215,15 @@ class TestPresenterRequest
 		$request->identity = $identity;
 
 		return $request;
+	}
+
+
+	public function execute(): TestPresenterResult
+	{
+		if ($this->presenterTester === NULL) {
+			throw new \RuntimeException('Presenter tester is not set.');
+		}
+		return $this->presenterTester->execute($this);
 	}
 
 }

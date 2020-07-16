@@ -1,24 +1,20 @@
 <?php declare(strict_types = 1);
 
-namespace Mangoweb\Tester\PresenterTester;
+namespace Forrest79\Tester\PresenterTester;
 
 use Nette\Application\Request;
 use Nette\Application\UI;
-use Nette\StaticClass;
 use Tester\Assert;
-
 
 class PresenterAssert
 {
-	use StaticClass;
 
-
-	public static function assertRequestMatch(Request $expected, ?array $actual, bool $onlyIntersectedParameters = true): void
+	public static function assertRequestMatch(Request $expected, ?array $actual, bool $onlyIntersectedParameters = TRUE): void
 	{
-		Assert::notSame(null, $actual);
-		assert($actual !== null);
+		Assert::notSame(NULL, $actual);
+		assert($actual !== NULL);
 
-		$presenter = $actual[UI\Presenter::PRESENTER_KEY] ?? null;
+		$presenter = $actual[UI\Presenter::PRESENTER_KEY] ?? NULL;
 		Assert::same($expected->getPresenterName(), $presenter);
 		unset($actual[UI\Presenter::PRESENTER_KEY]);
 

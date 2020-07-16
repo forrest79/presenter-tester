@@ -1,49 +1,42 @@
 <?php declare(strict_types = 1);
 
-namespace Mangoweb\Tester\PresenterTester;
+namespace Forrest79\Tester\PresenterTester;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\IPresenter;
 use Nette\Application\IPresenterFactory;
-use Nette\Application\IRouter;
 use Nette\Application\Request as AppRequest;
 use Nette\Application\UI\Presenter;
 use Nette\Http\IRequest;
 use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\UrlScript;
+use Nette\Routing\Router;
 use Nette\Security\User;
 use Tester\Assert;
 
-
 class PresenterTester
 {
-	/** @var Session */
-	private $session;
+	private Session $session;
 
-	/** @var IPresenterFactory */
-	private $presenterFactory;
+	private IPresenterFactory $presenterFactory;
 
-	/** @var IRouter */
-	private $router;
+	private Router $router;
 
-	/** @var Request */
-	private $httpRequest;
+	private Request $httpRequest;
 
-	/** @var string */
-	private $baseUrl;
+	private string $baseUrl;
 
-	/** @var User */
-	private $user;
+	private User $user;
 
-	/** @var IPresenterTesterListener[] */
-	private $listeners;
+	/** @var array<IPresenterTesterListener> */
+	private array $listeners;
 
 	/** @var callable|NULL */
 	private $identityFactory;
 
-	/** @var TestPresenterResult[] */
-	private $results = [];
+	/** @var array<TestPresenterResult> */
+	private array $results = [];
 
 
 	/**
@@ -53,20 +46,19 @@ class PresenterTester
 		string $baseUrl,
 		Session $session,
 		IPresenterFactory $presenterFactory,
-		IRouter $router,
+		Router $router,
 		IRequest $httpRequest,
 		User $user,
 		array $listeners = [],
-		callable $identityFactory = null
+		callable $identityFactory = NULL
 	)
 	{
+		$this->baseUrl = $baseUrl;
 		$this->session = $session;
-
 		$this->presenterFactory = $presenterFactory;
 		$this->router = $router;
 		assert($httpRequest instanceof Request);
 		$this->httpRequest = $httpRequest;
-		$this->baseUrl = $baseUrl;
 		$this->user = $user;
 		$this->listeners = $listeners;
 		$this->identityFactory = $identityFactory;
@@ -87,16 +79,16 @@ class PresenterTester
 
 		try {
 			$response = $presenter->run($applicationRequest);
-			$badRequestException = null;
+			$badRequestException = NULL;
 		} catch (BadRequestException $badRequestException) {
-			$response = null;
+			$response = NULL;
 		}
 		if ($applicationRequest->getParameter(Presenter::SIGNAL_KEY) && method_exists($presenter, 'isSignalProcessed')) {
 			if (!$presenter->isSignalProcessed()) {
 				if ($badRequestException) {
 					$cause = 'BadRequestException with code ' . $badRequestException->getCode() . ' and message "' . $badRequestException->getMessage() . '"';
 				} else {
-					assert($response !== null);
+					assert($response !== NULL);
 					$cause = get_class($response);
 				}
 				Assert::fail('Signal has not been processed at all, received ' . $cause);
@@ -115,12 +107,12 @@ class PresenterTester
 
 	public function createRequest(string $presenterName): TestPresenterRequest
 	{
-		return new TestPresenterRequest($presenterName, $this->session);
+		return new TestPresenterRequest($presenterName, $this->session, $this);
 	}
 
 
 	/**
-	 * @return TestPresenterResult[]
+	 * @return array<TestPresenterResult>
 	 */
 	public function getResults(): array
 	{
@@ -155,7 +147,7 @@ class PresenterTester
 
 	protected function loginUser(TestPresenterRequest $request): void
 	{
-		$this->user->logout(true);
+		$this->user->logout(TRUE);
 		$identity = $request->getIdentity();
 		if (!$identity && $request->shouldHaveIdentity()) {
 			if (!$this->identityFactory) {
@@ -194,7 +186,7 @@ class PresenterTester
 
 	protected function setupUIPresenter(Presenter $presenter): void
 	{
-		$presenter->autoCanonicalize = false;
+		$presenter->autoCanonicalize = FALSE;
 		$presenter->invalidLinkMode = Presenter::INVALID_LINK_EXCEPTION;
 	}
 }
