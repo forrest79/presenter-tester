@@ -147,6 +147,10 @@ class PresenterTester
 
 	protected function loginUser(TestPresenterRequest $request): void
 	{
+		if ($request->getKeepIdentity()) {
+			return;
+		}
+
 		$this->user->logout(TRUE);
 		$identity = $request->getIdentity();
 		if (!$identity && $request->shouldHaveIdentity()) {

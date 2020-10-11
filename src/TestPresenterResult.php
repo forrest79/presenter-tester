@@ -206,6 +206,21 @@ class TestPresenterResult
 	}
 
 
+	/**
+	 * @param array $parameters optional parameters, extra parameters in a redirect request are ignored
+	 */
+	public function assertRedirectsAction(string $presenterName, string $action = 'default', array $parameters = []): self
+	{
+		if (isset($parameters['action'])) {
+			throw new \RuntimeException('In assertRedirectsAction() is not possible to set \'action\' in parameters.');
+		}
+
+		$parameters['action'] = $action;
+
+		return $this->assertRedirects($presenterName, $parameters);
+	}
+
+
 	public function assertRedirectsUrl(string $url): self
 	{
 		$this->responseInspected = TRUE;

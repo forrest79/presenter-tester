@@ -34,9 +34,11 @@ class TestPresenterRequest
 
 	private bool $ajax = false;
 
-	private bool $shouldHaveIdentity = FALSE;
+	private bool $shouldHaveIdentity = false;
 
 	private ?IIdentity $identity = NULL;
+
+	private bool $keepIdentity = false;
 
 
 	public function __construct(string $presenterName, Session $session, ?PresenterTester $presenterTester = NULL)
@@ -109,7 +111,13 @@ class TestPresenterRequest
 	}
 
 
-	public function withSignal(string $signal, array $componentParameters = []): TestPresenterRequest
+	public function getKeepIdentity(): bool
+	{
+		return $this->keepIdentity;
+	}
+
+
+	public function withSignal(string $signal, array $componentParameters = []): self
 	{
 		assert(!isset($this->parameters['do']));
 		$request = clone $this;
@@ -131,7 +139,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withMethod(string $methodName): TestPresenterRequest
+	public function withMethod(string $methodName): self
 	{
 		$request = clone $this;
 		$request->methodName = $methodName;
@@ -140,7 +148,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withForm(string $formName, array $post, array $files = [], bool $withProtection = true): TestPresenterRequest
+	public function withForm(string $formName, array $post, array $files = [], bool $withProtection = true): self
 	{
 		$request = $this->withSignal("$formName-submit");
 		if ($withProtection) {
@@ -154,7 +162,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withRawBody(string $rawBody): TestPresenterRequest
+	public function withRawBody(string $rawBody): self
 	{
 		$request = clone $this;
 		$request->rawBody = $rawBody;
@@ -163,7 +171,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withHeaders(array $headers): TestPresenterRequest
+	public function withHeaders(array $headers): self
 	{
 		$request = clone $this;
 		$request->headers = array_change_key_case($headers, CASE_LOWER) + $request->headers;
@@ -172,7 +180,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withAjax(bool $enable = true): TestPresenterRequest
+	public function withAjax(bool $enable = true): self
 	{
 		$request = clone $this;
 		$request->ajax = $enable;
@@ -181,7 +189,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withParameters(array $parameters): TestPresenterRequest
+	public function withParameters(array $parameters): self
 	{
 		$request = clone $this;
 		$request->parameters = $parameters + $this->parameters;
@@ -190,7 +198,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withPost(array $post): TestPresenterRequest
+	public function withPost(array $post): self
 	{
 		$request = clone $this;
 		$request->post = $post + $this->post;
@@ -199,7 +207,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withFiles(array $files): TestPresenterRequest
+	public function withFiles(array $files): self
 	{
 		$request = clone $this;
 		$request->files = $files + $this->files;
@@ -208,11 +216,20 @@ class TestPresenterRequest
 	}
 
 
-	public function withIdentity(IIdentity $identity = null): TestPresenterRequest
+	public function withIdentity(IIdentity $identity = null): self
 	{
 		$request = clone $this;
 		$request->shouldHaveIdentity = true;
 		$request->identity = $identity;
+
+		return $request;
+	}
+
+
+	public function withKeepIdentity(bool $enable = true): self
+	{
+		$request = clone $this;
+		$request->keepIdentity = $enable;
 
 		return $request;
 	}
