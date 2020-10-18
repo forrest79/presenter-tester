@@ -30,6 +30,8 @@ class TestPresenterRequest
 
 	private ?string $rawBody = NULL;
 
+	private array $cookies = [];
+
 	private array $files = [];
 
 	private bool $ajax = false;
@@ -84,6 +86,12 @@ class TestPresenterRequest
 	public function getRawBody(): ?string
 	{
 		return $this->rawBody;
+	}
+
+
+	public function getCookies(): array
+	{
+		return $this->cookies;
 	}
 
 
@@ -202,6 +210,15 @@ class TestPresenterRequest
 	{
 		$request = clone $this;
 		$request->post = $post + $this->post;
+
+		return $request;
+	}
+
+
+	public function withCookies(array $cookies): self
+	{
+		$request = clone $this;
+		$request->cookies = $cookies + $this->cookies;
 
 		return $request;
 	}

@@ -183,6 +183,7 @@ class PresenterTester
 			$this->post = $request->getPost();
 			$this->url = $url;
 			$this->method = ($request->getPost() || $request->getRawBody()) ? 'POST' : 'GET';
+			$this->cookies = $request->getCookies() + $this->cookies;
 			$this->rawBodyCallback = [$request, 'getRawBody'];
 		}, $this->httpRequest, Request::class)->__invoke();
 	}
