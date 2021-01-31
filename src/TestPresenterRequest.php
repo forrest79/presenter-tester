@@ -34,13 +34,13 @@ class TestPresenterRequest
 
 	private array $files = [];
 
-	private bool $ajax = false;
+	private bool $ajax = FALSE;
 
-	private bool $shouldHaveIdentity = false;
+	private bool $shouldHaveIdentity = FALSE;
 
 	private ?IIdentity $identity = NULL;
 
-	private bool $keepIdentity = false;
+	private bool $keepIdentity = FALSE;
 
 
 	public function __construct(string $presenterName, Session $session, ?PresenterTester $presenterTester = NULL)
