@@ -4,7 +4,7 @@ namespace Forrest79\Tester\PresenterTester;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\IPresenter;
-use Nette\Application\IResponse;
+use Nette\Application\Response;
 use Nette\Application\Request;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
@@ -26,7 +26,7 @@ class TestPresenterResult
 
 	private Request $request;
 
-	private ?IResponse $response;
+	private ?Response $response;
 
 	private ?string $textResponseSource = NULL;
 
@@ -39,7 +39,7 @@ class TestPresenterResult
 		Router $router,
 		Request $request,
 		IPresenter $presenter,
-		?IResponse $response,
+		?Response $response,
 		?BadRequestException $badRequestException
 	)
 	{
@@ -71,7 +71,7 @@ class TestPresenterResult
 	}
 
 
-	public function getResponse(): IResponse
+	public function getResponse(): Response
 	{
 		Assert::null($this->badRequestException);
 		assert($this->response !== NULL);
@@ -128,7 +128,7 @@ class TestPresenterResult
 	public function assertHasResponse(string $type = NULL): self
 	{
 		$this->responseInspected = TRUE;
-		Assert::type($type ?? IResponse::class, $this->response);
+		Assert::type($type ?? Response::class, $this->response);
 
 		return $this;
 	}

@@ -2,6 +2,7 @@
 
 namespace Forrest79\Tester\PresenterTester;
 
+use Nette\Application\Application;
 use Nette\Application\BadRequestException;
 use Nette\Application\IPresenter;
 use Nette\Application\IPresenterFactory;
@@ -13,10 +14,12 @@ use Nette\Http\Session;
 use Nette\Http\UrlScript;
 use Nette\Routing\Router;
 use Nette\Security\User;
-use Tester\Assert;
+use Nette\Utils\Arrays;
 
 class PresenterTester
 {
+	private Application $application;
+
 	private Session $session;
 
 	private IPresenterFactory $presenterFactory;
@@ -44,6 +47,7 @@ class PresenterTester
 	 */
 	public function __construct(
 		string $baseUrl,
+		Application $application,
 		Session $session,
 		IPresenterFactory $presenterFactory,
 		Router $router,
@@ -54,6 +58,7 @@ class PresenterTester
 	)
 	{
 		$this->baseUrl = $baseUrl;
+		$this->application = $application;
 		$this->session = $session;
 		$this->presenterFactory = $presenterFactory;
 		$this->router = $router;
@@ -70,29 +75,20 @@ class PresenterTester
 		foreach ($this->listeners as $listener) {
 			$testRequest = $listener->onRequest($testRequest);
 		}
-		$applicationRequest = $this->createApplicationRequest($testRequest);
+		$applicationRequest = self::createApplicationRequest($testRequest);
 		$presenter = $this->createPresenter($testRequest);
 		if ($applicationRequest->getMethod() === 'GET') {
 			$params = $this->router->match($this->httpRequest);
 			PresenterAssert::assertRequestMatch($applicationRequest, $params);
 		}
 
+		Arrays::invoke($this->application->onRequest, $this->application, $applicationRequest);
+
 		try {
 			$response = $presenter->run($applicationRequest);
 			$badRequestException = NULL;
 		} catch (BadRequestException $badRequestException) {
 			$response = NULL;
-		}
-		if ($applicationRequest->getParameter(Presenter::SIGNAL_KEY) && method_exists($presenter, 'isSignalProcessed')) {
-			if (!$presenter->isSignalProcessed()) {
-				if ($badRequestException) {
-					$cause = 'BadRequestException with code ' . $badRequestException->getCode() . ' and message "' . $badRequestException->getMessage() . '"';
-				} else {
-					assert($response !== NULL);
-					$cause = get_class($response);
-				}
-				Assert::fail('Signal has not been processed at all, received ' . $cause);
-			}
 		}
 
 		$result = new TestPresenterResult($this->router, $applicationRequest, $presenter, $response, $badRequestException);
@@ -133,7 +129,7 @@ class PresenterTester
 	}
 
 
-	protected function createApplicationRequest(TestPresenterRequest $testRequest): AppRequest
+	protected static function createApplicationRequest(TestPresenterRequest $testRequest): AppRequest
 	{
 		return new AppRequest(
 			$testRequest->getPresenterName(),
@@ -167,7 +163,7 @@ class PresenterTester
 
 	protected function setupHttpRequest(TestPresenterRequest $request): void
 	{
-		$appRequest = $this->createApplicationRequest($request);
+		$appRequest = self::createApplicationRequest($request);
 		$refUrl = new UrlScript($this->baseUrl, '/');
 
 		$url = new UrlScript($this->router->constructUrl($appRequest->toArray(), $refUrl), '/');
