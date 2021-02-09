@@ -2,7 +2,7 @@
 	"name": "forrest79/presenter-tester",
 	"license": "MIT",
 	"require": {
-		"php": "~7.1",
+		"php": "~7.1 | ~8.0",
 		"nette/application": "~3.0",
 		"nette/security": "~3.0",
 		"nette/forms": "~3.0",
