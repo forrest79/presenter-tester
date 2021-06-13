@@ -160,8 +160,12 @@ class TestPresenterRequest
 	{
 		$request = $this->withSignal("$formName-submit");
 		if ($withProtection) {
-			$token = 'abcdefghij' . base64_encode(sha1(('mango.token' ^ $this->session->getId()) . 'abcdefghij', true));
-			$post = $post + ['_token_' => $token];
+			$this->session->regenerateId(); // @hack to prevent regenerate session ID during two requests
+
+			$random = 'abcdefghij';
+			// The same logic as vendor/nette/forms/src/Forms/Controls/CsrfProtection.php::generateToken(...)
+			$token = $random . base64_encode(sha1(('mango.token' ^ $this->session->getId()) . $random, true));
+			$post += ['_token_' => $token];
 		}
 		$request->post = $post;
 		$request->files = $files;
