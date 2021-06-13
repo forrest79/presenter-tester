@@ -1,36 +1,38 @@
-Mango Presenter Tester
-======
-** Fork just for personal use :-) **
+# Forrest79/PresenterTester
 
+[![Latest Stable Version](https://poser.pugx.org/forrest79/presenter-tester/v)](//packagist.org/packages/forrest79/presenter-tester)
+[![Monthly Downloads](https://poser.pugx.org/forrest79/presenter-tester/d/monthly)](//packagist.org/packages/forrest79/presenter-tester)
+[![License](https://poser.pugx.org/forrest79/presenter-tester/license)](//packagist.org/packages/forrest79/presenter-tester)
+[![Build](https://github.com/forrest79/PresenterTester/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/forrest79/PresenterTester/actions/workflows/build.yml)
+
+> [Mango Presenter Tester](https://github.com/mangoweb-backend/presenter-tester) fork just for personal use with some tweaks.
 
 Testing tool for Nette presenter with easy to use API.
 
-Installation
-----
+## Installation
 
 The recommended way to install is via Composer:
 
 ```
-composer require mangoweb/presenter-tester
+composer require forrest79/presenter-tester
 ```
 
-It requires PHP version 7.1.
+It requires PHP version 7.4.
 
-Integration & configuration
------
+## Integration & configuration
 
 If you are using power of Nette DI Container in your tests, you can use Presenter Tester in your current testing environment. All you need is to register PresenterTester service in `.neon` configuration for tests.
 
 ```neon
 services:
-	- Mangoweb\Tester\PresenterTester\PresenterTester(baseUrl: "http://my-app.dev")
+	- Forrest79\PresenterTester\PresenterTester(baseUrl: "http://my-app.test")
 ```
 
 You can also specify list of [listeners](#listeners):
 
 ```neon
 services:
-	- Mangoweb\Tester\PresenterTester\PresenterTester(
+	- Forrest79\PresenterTester\PresenterTester(
 		baseUrl: "http://my-app.dev"
 		listeners: [
 			MyListener()
@@ -38,23 +40,7 @@ services:
 	)
 ```
 
-Other way is to use Presenter Tester together with [mangoweb/tester-infrastructure](https://github.com/mangoweb-backend/tester-infrastructure). In that case you have to register DI extension in infrastructure `.neon` file:
-
-```
-extensions:
-	mango.presenterTester: Mangoweb\Tester\PresenterTester\Bridges\Infrastructure\PresenterTesterExtension
-```
-
-In configuration of the extension you can set a base url and custom [identity factory](#identity-factory).
-
-```
-mango.presenterTester:
-	baseUrl: http://my-app.dev
-	identityFactory: MyIdentityFactory()
-```
-
-Usage
-----
+## Usage
 
 In Mango Tester Infrastructure environment, service `PresenterTester` is available in infrastructure container. When you get the service, you can start testing your presenters:
 
@@ -74,8 +60,7 @@ After the test request is configured, you pass it to `execute` method, which per
 
 The `TestPresenterResult` contains many useful assert functions like render check or form validity check. In our example there is `assertRenders` method, which asserts that presenter returns `TextResponse` and that the text contains given pattern. You probably already know the pattern format from [Tester\Assert::match()](https://tester.nette.org/en/writing-tests#toc-assert-match) function.
 
-TestPresenterRequest API
------
+## TestPresenterRequest API
 
 **Beware that ``TestPresenterRequest`` is immutable object.**
 
@@ -87,8 +72,8 @@ Add form submission data to request. You have to specify full component tree pat
 
 Presenter Tester supports forms with CSRF protection, but since it uses session, it is recommended to install [mangoweb/tester-http-mocks](https://github.com/mangoweb-backend/tester-http-mocks) package.
 
-### `withSignal(string $signal, array $componentParameters = [], string $componentClass = null)`
-With Presenter Tester, you can also easily test signal method. The componentClass is only required in the case you are using `nextras/secured-links` (which you should). It is also recommended to install [mangoweb/tester-http-mocks](https://github.com/mangoweb-backend/tester-http-mocks) package.
+### `withSignal(string $signal, array $componentParameters = [])`
+With Presenter Tester, you can also easily test signal method.
 
 ### `withAjax`
 (Not only) signals often uses AJAX, which you can enable using this method.
@@ -106,8 +91,7 @@ Change identity of User, which is executing given request. This is useful when l
 ### `withFiles(array $files)`
 ### `withRawBody(string$rawBody)`
 
-TestPresenterResult API
-------
+## TestPresenterResult API
 It is a result of test execution. It wraps `Nette\Application\IResponse` and adds few methods to check the response easily.
 
 ### `assertRenders($match)`
@@ -129,19 +113,14 @@ Checks that request redirects to given presenter. You can also pass parameters t
 ### `assertFormValid($formName)`
 ### `assertFormHasErrors($formName, $formErrors)`
 
------
-Also, there are methods like `getResponse` or `getPresenter` to access original data a perform some custom checks.
+Also, there are methods like `getResponse` or `getPresenter` to access original data and perform some custom checks.
 
+## Listeners
 
-
-Listeners
-----
-
-You can hook to some events by implementing `Mangoweb\Tester\PresenterTester\IPresenterTesterListener` interface. Then you can e.g. modify test request or execute some implicit result checks.
+You can hook to some events by implementing `Forrest79\PresenterTester\PresenterTesterListener` interface. Then you can e.g. modify test request or execute some implicit result checks.
 
 To register a listener, simply register it as a service in DI container (infrastructure container if you are using Mango Tester Infrastructure).
 
-Identity factory
-----
+## Identity factory
 
 Using identity factory you can implement a factory which creates a default identity. The factory is a simple PHP callback, which accepts `PresenterTestRequest` and returns `Nette\Security\IIdentity`.

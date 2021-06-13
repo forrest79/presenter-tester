@@ -1,6 +1,6 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
-namespace Forrest79\Tester\PresenterTester;
+namespace Forrest79\PresenterTester;
 
 use Nette\Application\Application;
 use Nette\Application\BadRequestException;
@@ -32,7 +32,7 @@ class PresenterTester
 
 	private User $user;
 
-	/** @var array<IPresenterTesterListener> */
+	/** @var array<PresenterTesterListener> */
 	private array $listeners;
 
 	/** @var callable|NULL */
@@ -43,7 +43,7 @@ class PresenterTester
 
 
 	/**
-	 * @param IPresenterTesterListener[] $listeners
+	 * @param array<PresenterTesterListener> $listeners
 	 */
 	public function __construct(
 		string $baseUrl,
@@ -54,7 +54,7 @@ class PresenterTester
 		IRequest $httpRequest,
 		User $user,
 		array $listeners = [],
-		callable $identityFactory = NULL
+		?callable $identityFactory = NULL,
 	)
 	{
 		$this->baseUrl = $baseUrl;
@@ -84,10 +84,12 @@ class PresenterTester
 
 		Arrays::invoke($this->application->onRequest, $this->application, $applicationRequest);
 
+		$badRequestException = NULL;
+
 		try {
 			$response = $presenter->run($applicationRequest);
-			$badRequestException = NULL;
-		} catch (BadRequestException $badRequestException) {
+		} catch (BadRequestException $e) {
+			$badRequestException = $e;
 			$response = NULL;
 		}
 
@@ -133,10 +135,10 @@ class PresenterTester
 	{
 		return new AppRequest(
 			$testRequest->getPresenterName(),
-			$testRequest->getPost() ? 'POST' : $testRequest->getMethodName(),
+			$testRequest->getPost() !== [] ? 'POST' : $testRequest->getMethodName(),
 			$testRequest->getParameters(),
 			$testRequest->getPost(),
-			$testRequest->getFiles()
+			$testRequest->getFiles(),
 		);
 	}
 
@@ -149,8 +151,8 @@ class PresenterTester
 
 		$this->user->logout(TRUE);
 		$identity = $request->getIdentity();
-		if (!$identity && $request->shouldHaveIdentity()) {
-			if (!$this->identityFactory) {
+		if ($identity === NULL && $request->shouldHaveIdentity()) {
+			if ($this->identityFactory === NULL) {
 				throw new \LogicException('identityFactory is not set');
 			}
 			$identity = ($this->identityFactory)($request);
@@ -166,9 +168,11 @@ class PresenterTester
 		$appRequest = self::createApplicationRequest($request);
 		$refUrl = new UrlScript($this->baseUrl, '/');
 
-		$url = new UrlScript($this->router->constructUrl($appRequest->toArray(), $refUrl), '/');
+		$routerUrl = $this->router->constructUrl($appRequest->toArray(), $refUrl);
+		assert(is_string($routerUrl));
+		$url = new UrlScript($routerUrl, '/');
 
-		\Closure::bind(function () use ($request, $url) {
+		\Closure::bind(function () use ($request, $url): void {
 			/** @var Request $this */
 			$this->headers = $request->getHeaders() + $this->headers;
 			if ($request->isAjax()) {
@@ -178,10 +182,10 @@ class PresenterTester
 			}
 			$this->post = $request->getPost();
 			$this->url = $url;
-			$this->method = ($request->getPost() || $request->getRawBody()) ? 'POST' : 'GET';
+			$this->method = ($request->getPost() !== [] || $request->getRawBody() !== NULL) ? 'POST' : 'GET';
 			$this->cookies = $request->getCookies() + $this->cookies;
 			$this->rawBodyCallback = [$request, 'getRawBody'];
-		}, $this->httpRequest, Request::class)->__invoke();
+		}, $this->httpRequest, Request::class)();
 	}
 
 
@@ -190,4 +194,5 @@ class PresenterTester
 		$presenter->autoCanonicalize = FALSE;
 		$presenter->invalidLinkMode = Presenter::INVALID_LINK_EXCEPTION;
 	}
+
 }

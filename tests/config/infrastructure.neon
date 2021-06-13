@@ -1,4 +1,0 @@
-mango.tester:
-	appContainer:
-		configs:
-			- %configDir%/app.neon

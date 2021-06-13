@@ -1,6 +1,6 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
-namespace Forrest79\Tester\PresenterTester;
+namespace Forrest79\PresenterTester;
 
 use Nette\Application\Request;
 use Nette\Application\UI;
@@ -9,7 +9,14 @@ use Tester\Assert;
 class PresenterAssert
 {
 
-	public static function assertRequestMatch(Request $expected, ?array $actual, bool $onlyIntersectedParameters = TRUE): void
+	/**
+	 * @param array<string, mixed>|NULL $actual
+	 */
+	public static function assertRequestMatch(
+		Request $expected,
+		?array $actual,
+		bool $onlyIntersectedParameters = TRUE,
+	): void
 	{
 		Assert::notSame(NULL, $actual);
 		assert($actual !== NULL);
@@ -25,12 +32,14 @@ class PresenterAssert
 				if ($onlyIntersectedParameters) {
 					continue;
 				}
-				Assert::fail("Parameter $key not expected");
+				Assert::fail(sprintf('Parameter %s not expected', $key));
 			}
+
 			$expectedParameter = $expectedParameters[$key];
 			if (is_string($actualParameter) && !is_string($expectedParameter)) {
 				$expectedParameter = (string) $expectedParameter;
 			}
+
 			Assert::same($actualParameter, $expectedParameter, $key);
 		}
 	}

@@ -1,7 +1,17 @@
+includes:
+	- vendor/phpstan/phpstan-strict-rules/rules.neon
+
 parameters:
+	level: max
 	universalObjectCratesClasses:
 		- Nette\Http\SessionSection
 	ignoreErrors:
-		- '#Call to an undefined method object\:\:__toString\(\)#'
-		- '#Call to an undefined method object\:\:getId\(\)#'
-		- '#Call to an undefined method Nette\\Application\\IPresenter::isSignalProcessed\(\)#'
+		-
+			message: '#Property Nette\\Http\\Request::\$(headers|post|url|method|cookies) is not writable\.#'
+			path: %rootDir%/../../../src/PresenterTester.php
+			count: 5
+
+		-
+			message: '#Call to an undefined method object\:\:__toString\(\)\.#'
+			path: %rootDir%/../../../src/TestPresenterResult.php
+			count: 1

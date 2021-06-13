@@ -1,11 +1,11 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
-namespace Forrest79\Tester\PresenterTester;
+namespace Forrest79\PresenterTester;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\IPresenter;
-use Nette\Application\Response;
 use Nette\Application\Request;
+use Nette\Application\Response;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
@@ -99,7 +99,7 @@ class TestPresenterResult
 
 	public function getTextResponseSource(): string
 	{
-		if (!$this->textResponseSource) {
+		if ($this->textResponseSource !== NULL) {
 			$source = $this->getTextResponse()->getSource();
 			$this->textResponseSource = is_object($source) ? $source->__toString(TRUE) : (string) $source;
 			Assert::type('string', $this->textResponseSource);
@@ -125,7 +125,7 @@ class TestPresenterResult
 	}
 
 
-	public function assertHasResponse(string $type = NULL): self
+	public function assertHasResponse(?string $type = NULL): self
 	{
 		$this->responseInspected = TRUE;
 		Assert::type($type ?? Response::class, $this->response);
@@ -135,7 +135,7 @@ class TestPresenterResult
 
 
 	/**
-	 * @param string|array|NULL $match
+	 * @param string|array<string>|NULL $match
 	 */
 	public function assertRenders($match = NULL): self
 	{
@@ -143,29 +143,28 @@ class TestPresenterResult
 		if (is_array($match)) {
 			$match = '%A?%' . implode('%A?%', $match) . '%A?%';
 		}
-		assert(is_string($match) || $match === NULL);
+
 		$source = $this->getTextResponseSource();
 		if ($match !== NULL) {
 			Assert::match($match, $source);
 		}
+
 		return $this;
 	}
 
 
 	/**
-	 * @param string|array $matches
+	 * @param string|array<string> $matches
 	 */
 	public function assertNotRenders($matches): self
 	{
 		if (is_string($matches)) {
 			$matches = [$matches];
 		}
-		assert(is_array($matches));
 		$this->responseInspected = TRUE;
 		$source = $this->getTextResponseSource();
 		foreach ($matches as $match) {
-			assert(is_string($match));
-			$match = "%A%$match%A%";
+			$match = '%A%' . $match . '%A%';
 			if (Assert::isMatching($match, $source)) {
 				[$pattern, $actual] = Assert::expandMatchingPatterns($match, $source);
 				Assert::fail('%1 should NOT match %2', $actual, $pattern);
@@ -176,7 +175,7 @@ class TestPresenterResult
 
 
 	/**
-	 * @param array|object|NULL $expected
+	 * @param array<mixed>|object|NULL $expected
 	 */
 	public function assertJson($expected = NULL): self
 	{
@@ -190,7 +189,7 @@ class TestPresenterResult
 
 
 	/**
-	 * @param array $parameters optional parameters, extra parameters in a redirect request are ignored
+	 * @param array<string, mixed> $parameters optional parameters, extra parameters in a redirect request are ignored
 	 */
 	public function assertRedirects(string $presenterName, array $parameters = []): self
 	{
@@ -207,9 +206,13 @@ class TestPresenterResult
 
 
 	/**
-	 * @param array $parameters optional parameters, extra parameters in a redirect request are ignored
+	 * @param array<string, mixed> $parameters optional parameters, extra parameters in a redirect request are ignored
 	 */
-	public function assertRedirectsAction(string $presenterName, string $action = 'default', array $parameters = []): self
+	public function assertRedirectsAction(
+		string $presenterName,
+		string $action = 'default',
+		array $parameters = []
+	): self
 	{
 		if (isset($parameters['action'])) {
 			throw new \RuntimeException('In assertRedirectsAction() is not possible to set \'action\' in parameters.');
@@ -238,28 +241,36 @@ class TestPresenterResult
 		$form = $presenter->getComponent($formName, FALSE);
 		Assert::type(Form::class, $form);
 		assert($form instanceof Form);
+
 		if ($form->hasErrors()) {
 			$controls = $form->getComponents(TRUE, IControl::class);
+
 			$errorsStr = [];
 			foreach ($form->getOwnErrors() as $error) {
 				$errorsStr[] = "\town error: " . $error;
 			}
+
 			foreach ($controls as $control) {
 				assert($control instanceof Component && $control instanceof IControl);
 				$errors = $control->getErrors();
 				foreach ($errors as $error) {
-					$errorsStr[] = "\t" . $control->lookupPath(Form::class) . ": " . $error;
+					$errorsStr[] = "\t" . $control->lookupPath(Form::class) . ': ' . $error;
 				}
 			}
+
 			Assert::fail(
-				"Form has errors: \n" . implode("\n", $errorsStr) . "\n",
-				$form->getErrors(), []
+				'Form has errors: ' . PHP_EOL . implode(PHP_EOL, $errorsStr) . PHP_EOL,
+				$form->getErrors(),
+				[],
 			);
 		}
 		return $this;
 	}
 
 
+	/**
+	 * @param array<string> $formErrors
+	 */
 	public function assertFormHasErrors(string $formName, ?array $formErrors = NULL): self
 	{
 		$this->responseInspected = TRUE;
@@ -277,7 +288,7 @@ class TestPresenterResult
 	}
 
 
-	public function assertBadRequest(int $code = NULL, string $messagePattern = NULL)
+	public function assertBadRequest(?int $code = NULL, ?string $messagePattern = NULL): self
 	{
 		$this->responseInspected = TRUE;
 		Assert::type(BadRequestException::class, $this->badRequestException);

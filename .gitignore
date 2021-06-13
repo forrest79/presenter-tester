@@ -1,4 +1,2 @@
-/composer.lock
-/tests/temp
-/vendor
-/tests/cases/**/output
+/vendor/
+composer.lock

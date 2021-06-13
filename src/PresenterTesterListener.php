@@ -1,8 +1,8 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
-namespace Forrest79\Tester\PresenterTester;
+namespace Forrest79\PresenterTester;
 
-interface IPresenterTesterListener
+interface PresenterTesterListener
 {
 
 	function onRequest(TestPresenterRequest $request): TestPresenterRequest;

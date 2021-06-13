@@ -1,6 +1,6 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
-namespace Forrest79\Tester\PresenterTester;
+namespace Forrest79\PresenterTester;
 
 use Nette\Forms\Controls\CsrfProtection;
 use Nette\Http\Session;
@@ -22,16 +22,21 @@ class TestPresenterRequest
 
 	private string $methodName = 'GET';
 
+	/** @var array<string, string> */
 	private array $headers = [];
 
+	/** @var array<string, mixed> */
 	private array $parameters = [];
 
+	/** @var array<string, string> */
 	private array $post = [];
 
 	private ?string $rawBody = NULL;
 
+	/** @var array<string, string> */
 	private array $cookies = [];
 
+	/** @var array<string, mixed> */
 	private array $files = [];
 
 	private bool $ajax = FALSE;
@@ -59,6 +64,9 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @return array<string, string>
+	 */
 	public function getHeaders(): array
 	{
 		return $this->headers;
@@ -71,12 +79,18 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function getParameters(): array
 	{
 		return $this->parameters + ['action' => 'default'];
 	}
 
 
+	/**
+	 * @return array<string, string>
+	 */
 	public function getPost(): array
 	{
 		return $this->post;
@@ -89,12 +103,18 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @return array<string, string>
+	 */
 	public function getCookies(): array
 	{
 		return $this->cookies;
 	}
 
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function getFiles(): array
 	{
 		return $this->files;
@@ -125,18 +145,21 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @param array<string, mixed> $componentParameters
+	 */
 	public function withSignal(string $signal, array $componentParameters = []): self
 	{
 		assert(!isset($this->parameters['do']));
 		$request = clone $this;
 		$request->parameters['do'] = $signal;
 		$lastDashPosition = strrpos($signal, '-');
-		$componentName = $lastDashPosition !== false ? substr($signal, 0, $lastDashPosition) : '';
+		$componentName = $lastDashPosition !== FALSE ? substr($signal, 0, $lastDashPosition) : '';
 
 		if ($componentName !== '') {
 			$newParameters = [];
 			foreach ($componentParameters as $key => $value) {
-				$newParameters["$componentName-$key"] = $value;
+				$newParameters[$componentName . '-' . $key] = $value;
 			}
 			$componentParameters = $newParameters;
 		}
@@ -156,15 +179,19 @@ class TestPresenterRequest
 	}
 
 
-	public function withForm(string $formName, array $post, array $files = [], bool $withProtection = true): self
+	/**
+	 * @param array<string, string> $post
+	 * @param array<string, mixed> $files
+	 */
+	public function withForm(string $formName, array $post, array $files = [], bool $withProtection = TRUE): self
 	{
-		$request = $this->withSignal("$formName-submit");
+		$request = $this->withSignal($formName . '-submit');
 		if ($withProtection) {
 			$this->session->regenerateId(); // @hack to prevent regenerate session ID during two requests
 
 			$random = 'abcdefghij';
 			// The same logic as vendor/nette/forms/src/Forms/Controls/CsrfProtection.php::generateToken(...)
-			$token = $random . base64_encode(sha1(('mango.token' ^ $this->session->getId()) . $random, true));
+			$token = $random . base64_encode(sha1(('mango.token' ^ $this->session->getId()) . $random, TRUE));
 			$post += ['_token_' => $token];
 		}
 		$request->post = $post;
@@ -183,6 +210,9 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @param array<string, string> $headers
+	 */
 	public function withHeaders(array $headers): self
 	{
 		$request = clone $this;
@@ -192,7 +222,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withAjax(bool $enable = true): self
+	public function withAjax(bool $enable = TRUE): self
 	{
 		$request = clone $this;
 		$request->ajax = $enable;
@@ -201,6 +231,9 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @param array<string, mixed> $parameters
+	 */
 	public function withParameters(array $parameters): self
 	{
 		$request = clone $this;
@@ -210,6 +243,9 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @param array<string, string> $post
+	 */
 	public function withPost(array $post): self
 	{
 		$request = clone $this;
@@ -219,6 +255,9 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @param array<string, string> $cookies
+	 */
 	public function withCookies(array $cookies): self
 	{
 		$request = clone $this;
@@ -228,6 +267,9 @@ class TestPresenterRequest
 	}
 
 
+	/**
+	 * @param array<string, mixed> $files
+	 */
 	public function withFiles(array $files): self
 	{
 		$request = clone $this;
@@ -237,17 +279,17 @@ class TestPresenterRequest
 	}
 
 
-	public function withIdentity(IIdentity $identity = null): self
+	public function withIdentity(?IIdentity $identity = NULL): self
 	{
 		$request = clone $this;
-		$request->shouldHaveIdentity = true;
+		$request->shouldHaveIdentity = TRUE;
 		$request->identity = $identity;
 
 		return $request;
 	}
 
 
-	public function withKeepIdentity(bool $enable = true): self
+	public function withKeepIdentity(bool $enable = TRUE): self
 	{
 		$request = clone $this;
 		$request->keepIdentity = $enable;
