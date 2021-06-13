@@ -1,6 +1,8 @@
 {
 	"name": "forrest79/presenter-tester",
-	"license": "MIT",
+	"description": "Testing tool for Nette presenter",
+	"keywords": ["test", "testing", "presenter"],
+	"license": "(BSD-3-Clause and MIT)",
 	"require": {
 		"php": "^7.4 | ^8.0",
 		"nette/application": "^3.0",
