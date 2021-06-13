@@ -99,7 +99,7 @@ class TestPresenterResult
 
 	public function getTextResponseSource(): string
 	{
-		if ($this->textResponseSource !== NULL) {
+		if ($this->textResponseSource === NULL) {
 			$source = $this->getTextResponse()->getSource();
 			$this->textResponseSource = is_object($source) ? $source->__toString(TRUE) : (string) $source;
 			Assert::type('string', $this->textResponseSource);

@@ -15,3 +15,13 @@ parameters:
 			message: '#Call to an undefined method object\:\:__toString\(\)\.#'
 			path: %rootDir%/../../../src/TestPresenterResult.php
 			count: 1
+
+		-
+			message: '#Forrest79\\PresenterTester\\Mocks\\Http\\Session::__construct\(\) does not call parent constructor from Nette\\Http\\Session\.#'
+			path: %rootDir%/../../../src/Mocks/Http/Session.php
+			count: 1
+
+		-
+			message: '#Method Forrest79\\PresenterTester\\Mocks\\Http\\Session::setOptions\(\) has parameter \$options with no value type specified in iterable type array\.#'
+			path: %rootDir%/../../../src/Mocks/Http/Session.php
+			count: 1

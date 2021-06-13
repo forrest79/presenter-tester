@@ -8,14 +8,6 @@
 		<exclude-pattern>src/*</exclude-pattern>
 	</rule>
 
-<!--	<rule ref="Forrest79CodingStandard.Exceptions.ExceptionDeclaration.IncorrectExceptionDirectory">-->
-<!--		<exclude-pattern>tests/helpers/TestLocaleUtilsException.php</exclude-pattern>-->
-<!--	</rule>-->
-
-<!--	<rule ref="PSR1.Files.SideEffects.FoundWithSymbols">-->
-<!--		<exclude-pattern>tests/*</exclude-pattern>-->
-<!--	</rule>-->
-
 	<rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration.NoAssignment">
 		<exclude-pattern>src/PresenterTester.php</exclude-pattern>
 	</rule>
@@ -31,32 +23,36 @@
 	<!-- PHP 8.0 -->
 	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration.MissingTrailingComma">
 		<exclude-pattern>src/TestPresenterResult.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
 	</rule>
 
-<!--	<rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">-->
-<!--		<exclude-pattern>src/LocaleUtils/Opcache.php</exclude-pattern>-->
-<!--		<exclude-pattern>src/RequestResolver.php</exclude-pattern>-->
-<!--		<exclude-pattern>tests/helpers/HomepagePresenter.php</exclude-pattern>-->
-<!--	</rule>-->
+	<rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">
+		<exclude-pattern>src/Helpers/MemorySessionHandler.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/Response.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.PHP.DisallowReference.DisallowedReturningReference">
+		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
+	</rule>
 
 	<!-- PHP 8.0 -->
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
 		<exclude-pattern>src/TestPresenterResult.php</exclude-pattern>
+		<exclude-pattern>src/Helpers/MemorySessionHandler.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/Response.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
 	</rule>
 
-<!--	<rule ref="Squiz.Functions.GlobalFunction.Found">-->
-<!--		<exclude-pattern>tests/helpers/functions.php</exclude-pattern>-->
-<!--	</rule>-->
+	<!-- PHP 8.0 -->
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
+		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
+	</rule>
 
 	<rule ref="Squiz.Scope.MethodScope.Missing">
 		<exclude-pattern>src/PresenterTesterListener.php</exclude-pattern>
 	</rule>
-
-<!--	<rule ref="Squiz.WhiteSpace.FunctionSpacing.After">-->
-<!--		<exclude-pattern>tests/helpers/functions.php</exclude-pattern>-->
-<!--	</rule>-->
-
-<!--	<rule ref="Squiz.WhiteSpace.FunctionSpacing.Before">-->
-<!--		<exclude-pattern>tests/helpers/functions.php</exclude-pattern>-->
-<!--	</rule>-->
 </ruleset>

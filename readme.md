@@ -23,17 +23,20 @@ It requires PHP version 7.4.
 
 If you are using power of Nette DI Container in your tests, you can use Presenter Tester in your current testing environment. All you need is to register PresenterTester service in `.neon` configuration for tests.
 
-```neon
+```yaml
 services:
 	- Forrest79\PresenterTester\PresenterTester(baseUrl: "http://my-app.test")
 ```
 
 You can also specify list of [listeners](#listeners):
 
-```neon
+```yaml
+parameters:
+	baseUrl: 'http://my-app.dev'
+
 services:
 	- Forrest79\PresenterTester\PresenterTester(
-		baseUrl: "http://my-app.dev"
+		baseUrl: %baseUrl%
 		listeners: [
 			MyListener()
 		]
@@ -42,7 +45,7 @@ services:
 
 ## Usage
 
-In Mango Tester Infrastructure environment, service `PresenterTester` is available in infrastructure container. When you get the service, you can start testing your presenters:
+Get `PresenterTester` service from DI container. When you get the service, you can start testing your presenters:
 
 ```php
 $testRequest = $presenterTester->createRequest('Admin:Article')
@@ -59,6 +62,68 @@ As you can see, you first create a `TestPresenterRequest` using `createRequest` 
 After the test request is configured, you pass it to `execute` method, which performs presenter execution and returns `TestPresenterResult`, which wraps `Nette\Application\IResponse` with some additional data collected during execution.
 
 The `TestPresenterResult` contains many useful assert functions like render check or form validity check. In our example there is `assertRenders` method, which asserts that presenter returns `TextResponse` and that the text contains given pattern. You probably already know the pattern format from [Tester\Assert::match()](https://tester.nette.org/en/writing-tests#toc-assert-match) function.
+
+## Helpers
+
+### MemorySessionHandler
+
+To bypass PHP session you can use for testing saving session just to memory. To do this, simply call this before running tests:
+
+```php
+Forrest79\PresenterTester\Helpers\MemorySessionHandler::install();
+```
+
+Or use mocked `Session`.
+
+## Mocks
+
+> Some mocks are takem from https://github.com/mangoweb-backend/tester-http-mocks
+
+### Http\Request
+
+To correct set SameSite cookie you need to redefine `Http\Request` for testing. You can use the original one from Nette:
+
+```yaml
+services:
+	http.request: Nette\Http\Request(
+		url: Nette\Http\UrlScript(%baseUrl%)
+		cookies: ['_nss': true] # Nette\Http\Helpers::STRICT_COOKIE_NAME
+		remoteAddress: '255.254.253.252' # you can set also some others values, for example REMOTE_ADDRESS
+	)
+```
+
+Or you can use mocked `Http\Request` like this:
+
+```yaml
+services:
+	http.request: Forrest79\PresenterTester\Mocks\Http\Request(
+		url: Nette\Http\UrlScript('http://my-app.dev')
+		remoteAddress: '255.254.253.252' # you can set also some others values, for example REMOTE_ADDRESS
+	)
+```
+
+### Http\Response
+
+If you want to test cookies, that're sent, use mocked `Http\Response`:
+
+```yaml
+services:
+	http.response:
+		factory: Forrest79\PresenterTester\Mocks\Http\Response
+		alteration: true
+```
+
+Then get `Forrest79\PresenterTester\Mocks\Http\Response` service from DI container a read cookies by `getCookies()` method.
+
+### Http\Session
+
+Fake testing session. When you use this, you don't need to install `MemorySessionHandler`.
+
+```yaml
+services:
+	session.session:
+		factory: Forrest79\PresenterTester\Mocks\Http\Session
+```
 
 ## TestPresenterRequest API
 
