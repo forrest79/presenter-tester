@@ -77,7 +77,7 @@ Or use mocked `Session`.
 
 ## Mocks
 
-> Some mocks are takem from https://github.com/mangoweb-backend/tester-http-mocks
+> Some mocks are taken from https://github.com/mangoweb-backend/tester-http-mocks
 
 ### Http\Request
 
