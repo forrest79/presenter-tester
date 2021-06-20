@@ -113,7 +113,7 @@ services:
 		alteration: true
 ```
 
-Then get `Forrest79\PresenterTester\Mocks\Http\Response` service from DI container a read cookies by `getCookies()` method.
+Then get `Forrest79\PresenterTester\Mocks\Http\Response` service from DI container and read cookies by `getCookies()` method.
 
 ### Http\Session
 
@@ -124,6 +124,19 @@ services:
 	session.session:
 		factory: Forrest79\PresenterTester\Mocks\Http\Session
 ```
+
+### Mail\Mailer
+
+Fake mailer. All send emails via `Nette\Mail` are saved to the memory, and you can check them in tests.
+
+```yaml
+services:
+	mail.mailer:
+		factory: Forrest79\PresenterTester\Mocks\Mail\Mailer
+		alteration: true
+```
+
+Then get `Forrest79\PresenterTester\Mocks\Mail\Mailer` service from DI container and read last message with `getLastMessage()` method, all messages with `getMessages()` method or check sent message count with `count()` method or use `Countable` interface.
 
 ## TestPresenterRequest API
 

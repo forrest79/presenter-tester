@@ -12,6 +12,7 @@
 	},
 	"require-dev": {
 		"forrest79/phpcs": "^0.2",
+		"nette/mail": "^3.0",
 		"phpstan/phpstan": "^0.12",
 		"phpstan/phpstan-strict-rules": "^0.12"
 	},
