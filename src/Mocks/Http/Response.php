@@ -101,7 +101,7 @@ class Response implements Http\IResponse
 		?string $path = NULL,
 		?string $domain = NULL,
 		?bool $secure = NULL,
-		?bool $httpOnly = NULL,
+		?bool $httpOnly = NULL
 	): self
 	{
 		$this->cookies[$name] = $value;
