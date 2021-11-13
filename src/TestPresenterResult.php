@@ -101,7 +101,13 @@ class TestPresenterResult
 	{
 		if ($this->textResponseSource === NULL) {
 			$source = $this->getTextResponse()->getSource();
-			$this->textResponseSource = is_object($source) ? $source->__toString(TRUE) : (string) $source;
+			if (is_object($source)) {
+				$this->textResponseSource = $source->__toString(TRUE);
+			} else if (is_string($source)) {
+				$this->textResponseSource = $source;
+			} else {
+				throw new \RuntimeException('No string type in text response.');
+			}
 			Assert::type('string', $this->textResponseSource);
 		}
 		return $this->textResponseSource;

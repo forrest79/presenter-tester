@@ -55,7 +55,7 @@ class SessionSection extends Http\SessionSection
 
 	public function __unset(string $name): void
 	{
-		unset($this->data[$name]);
+		$this->remove($name);
 	}
 
 
@@ -78,9 +78,22 @@ class SessionSection extends Http\SessionSection
 	}
 
 
-	public function remove(): void
+	/**
+	 * @param string|array|NULL $name
+	 */
+	public function remove($name = NULL): void
 	{
-		$this->data = [];
+		if ($name === NULL) {
+			$this->data = [];
+		} else {
+			if (is_array($name)) {
+				foreach ($name as $item) {
+					$this->remove($item);
+				}
+			} else {
+				unset($this->data[$name]);
+			}
+		}
 	}
 
 }

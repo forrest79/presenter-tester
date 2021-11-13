@@ -76,10 +76,11 @@ class MemorySessionHandler implements \SessionHandlerInterface
 
 	/**
 	 * @param int $maxLifeTime
+	 * @return int|FALSE
 	 */
-	public function gc($maxLifeTime): bool
+	public function gc($maxLifeTime)
 	{
-		return TRUE;
+		return 300;
 	}
 
 

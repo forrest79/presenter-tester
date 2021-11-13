@@ -25,3 +25,8 @@ parameters:
 			message: '#Method Forrest79\\PresenterTester\\Mocks\\Http\\Session::setOptions\(\) has parameter \$options with no value type specified in iterable type array\.#'
 			path: %rootDir%/../../../src/Mocks/Http/Session.php
 			count: 1
+
+		-
+			message: '#Method Forrest79\\PresenterTester\\Mocks\\Http\\SessionSection::remove\(\) has parameter \$name with no value type specified in iterable type array\.#'
+			path: %rootDir%/../../../src/Mocks/Http/SessionSection.php
+			count: 1

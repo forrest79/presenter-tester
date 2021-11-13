@@ -51,10 +51,12 @@
 
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification">
 		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
+		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
 	</rule>
 
 	<!-- PHP 8.0 -->
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
+		<exclude-pattern>src/Helpers/MemorySessionHandler.php</exclude-pattern>
 		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
 		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
 	</rule>
