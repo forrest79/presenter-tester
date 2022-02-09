@@ -28,6 +28,12 @@ class Session extends Http\Session
 	}
 
 
+	public function autoStart(bool $forWrite): void
+	{
+		$this->start();
+	}
+
+
 	public function isStarted(): bool
 	{
 		return $this->started;
@@ -110,10 +116,7 @@ class Session extends Http\Session
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setName(string $name): self
+	public function setName(string $name): static
 	{
 		return $this;
 	}
@@ -125,10 +128,7 @@ class Session extends Http\Session
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setOptions(array $options): self
+	public function setOptions(array $options): static
 	{
 		return $this;
 	}
@@ -143,24 +143,18 @@ class Session extends Http\Session
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setExpiration(?string $time): self
+	public function setExpiration(?string $time): static
 	{
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
 	public function setCookieParameters(
 		string $path,
 		?string $domain = NULL,
 		?bool $secure = NULL,
 		?string $samesite = NULL
-	): self
+	): static
 	{
 		return $this;
 	}
@@ -175,19 +169,13 @@ class Session extends Http\Session
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setSavePath(string $path): self
+	public function setSavePath(string $path): static
 	{
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setHandler(\SessionHandlerInterface $handler): self
+	public function setHandler(\SessionHandlerInterface $handler): static
 	{
 		return $this;
 	}

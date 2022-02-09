@@ -13,10 +13,7 @@ class Response implements Http\IResponse
 	private array $cookies = [];
 
 
-	/**
-	 * @return static
-	 */
-	public function setCode(int $code, ?string $reason = NULL): self
+	public function setCode(int $code, ?string $reason = NULL): static
 	{
 		return $this;
 	}
@@ -28,28 +25,19 @@ class Response implements Http\IResponse
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setHeader(string $name, string $value): self
+	public function setHeader(string $name, string $value): static
 	{
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function addHeader(string $name, string $value): self
+	public function addHeader(string $name, string $value): static
 	{
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setContentType(string $type, ?string $charset = NULL): self
+	public function setContentType(string $type, ?string $charset = NULL): static
 	{
 		return $this;
 	}
@@ -60,10 +48,7 @@ class Response implements Http\IResponse
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setExpiration(?string $expire): self
+	public function setExpiration(?string $expire): static
 	{
 		return $this;
 	}

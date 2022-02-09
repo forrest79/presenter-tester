@@ -62,9 +62,8 @@ class SessionSection extends Http\SessionSection
 	/**
 	 * @param string|NULL $time
 	 * @param string|array<string>|NULL $variables
-	 * @return static
 	 */
-	public function setExpiration($time, $variables = NULL): self
+	public function setExpiration($time, $variables = NULL): static
 	{
 		return $this;
 	}

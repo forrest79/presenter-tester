@@ -10,20 +10,13 @@ class MemorySessionHandler implements \SessionHandlerInterface
 	private array $sessionData = [];
 
 
-	/**
-	 * @param string $savePath
-	 * @param string $sessionName
-	 */
-	public function open($savePath, $sessionName): bool
+	public function open(string $savePath, string $sessionName): bool
 	{
 		return TRUE;
 	}
 
 
-	/**
-	 * @param string $id
-	 */
-	public function read($id): string
+	public function read(string $id): string
 	{
 		if (!isset($this->sessionData[$id])) {
 			$this->sessionData[$id] = '';
@@ -33,11 +26,7 @@ class MemorySessionHandler implements \SessionHandlerInterface
 	}
 
 
-	/**
-	 * @param string $id
-	 * @param string $data
-	 */
-	public function write($id, $data): bool
+	public function write(string $id, string $data): bool
 	{
 		if (!isset($this->sessionData[$id])) {
 			return FALSE;
@@ -49,10 +38,7 @@ class MemorySessionHandler implements \SessionHandlerInterface
 	}
 
 
-	/**
-	 * @param string $id
-	 */
-	public function destroy($id): bool
+	public function destroy(string $id): bool
 	{
 		if (!isset($this->sessionData[$id])) {
 			return FALSE;
@@ -74,12 +60,7 @@ class MemorySessionHandler implements \SessionHandlerInterface
 	}
 
 
-	/**
-	 * @param int $maxLifeTime
-	 * @return int|FALSE
-	 */
-	#[\ReturnTypeWillChange]
-	public function gc($maxLifeTime)
+	public function gc(int $maxLifeTime): int|FALSE
 	{
 		return 300;
 	}

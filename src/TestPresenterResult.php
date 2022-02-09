@@ -11,8 +11,8 @@ use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
 use Nette\Application\UI\Presenter;
 use Nette\ComponentModel\Component;
+use Nette\Forms\Control;
 use Nette\Forms\Form;
-use Nette\Forms\IControl;
 use Nette\Http\Request as HttpRequest;
 use Nette\Http\UrlScript;
 use Nette\Routing\Router;
@@ -131,7 +131,7 @@ class TestPresenterResult
 	}
 
 
-	public function assertHasResponse(?string $type = NULL): self
+	public function assertHasResponse(?string $type = NULL): static
 	{
 		$this->responseInspected = TRUE;
 		Assert::type($type ?? Response::class, $this->response);
@@ -143,7 +143,7 @@ class TestPresenterResult
 	/**
 	 * @param string|array<string>|NULL $match
 	 */
-	public function assertRenders($match = NULL): self
+	public function assertRenders(string|array|NULL $match = NULL): static
 	{
 		$this->responseInspected = TRUE;
 		if (is_array($match)) {
@@ -162,7 +162,7 @@ class TestPresenterResult
 	/**
 	 * @param string|array<string> $matches
 	 */
-	public function assertNotRenders($matches): self
+	public function assertNotRenders(string|array $matches): static
 	{
 		if (is_string($matches)) {
 			$matches = [$matches];
@@ -183,7 +183,7 @@ class TestPresenterResult
 	/**
 	 * @param array<mixed>|object|NULL $expected
 	 */
-	public function assertJson($expected = NULL): self
+	public function assertJson(array|object|NULL $expected = NULL): static
 	{
 		$this->responseInspected = TRUE;
 		$response = $this->getJsonResponse();
@@ -197,7 +197,7 @@ class TestPresenterResult
 	/**
 	 * @param array<string, mixed> $parameters optional parameters, extra parameters in a redirect request are ignored
 	 */
-	public function assertRedirects(string $presenterName, array $parameters = []): self
+	public function assertRedirects(string $presenterName, array $parameters = []): static
 	{
 		$this->responseInspected = TRUE;
 		$response = $this->getRedirectResponse();
@@ -218,7 +218,7 @@ class TestPresenterResult
 		string $presenterName,
 		string $action = 'default',
 		array $parameters = []
-	): self
+	): static
 	{
 		if (isset($parameters['action'])) {
 			throw new \RuntimeException('In assertRedirectsAction() is not possible to set \'action\' in parameters.');
@@ -230,7 +230,7 @@ class TestPresenterResult
 	}
 
 
-	public function assertRedirectsUrl(string $url): self
+	public function assertRedirectsUrl(string $url): static
 	{
 		$this->responseInspected = TRUE;
 		$response = $this->getRedirectResponse();
@@ -240,7 +240,7 @@ class TestPresenterResult
 	}
 
 
-	public function assertFormValid(string $formName): self
+	public function assertFormValid(string $formName): static
 	{
 		$this->responseInspected = TRUE;
 		$presenter = $this->getUIPresenter();
@@ -249,7 +249,7 @@ class TestPresenterResult
 		assert($form instanceof Form);
 
 		if ($form->hasErrors()) {
-			$controls = $form->getComponents(TRUE, IControl::class);
+			$controls = $form->getComponents(TRUE, Control::class);
 
 			$errorsStr = [];
 			foreach ($form->getOwnErrors() as $error) {
@@ -257,7 +257,7 @@ class TestPresenterResult
 			}
 
 			foreach ($controls as $control) {
-				assert($control instanceof Component && $control instanceof IControl);
+				assert($control instanceof Component && $control instanceof Control);
 				$errors = $control->getErrors();
 				foreach ($errors as $error) {
 					$errorsStr[] = "\t" . $control->lookupPath(Form::class) . ': ' . $error;
@@ -277,7 +277,7 @@ class TestPresenterResult
 	/**
 	 * @param array<string> $formErrors
 	 */
-	public function assertFormHasErrors(string $formName, ?array $formErrors = NULL): self
+	public function assertFormHasErrors(string $formName, ?array $formErrors = NULL): static
 	{
 		$this->responseInspected = TRUE;
 		$presenter = $this->getUIPresenter();
@@ -294,7 +294,7 @@ class TestPresenterResult
 	}
 
 
-	public function assertBadRequest(?int $code = NULL, ?string $messagePattern = NULL): self
+	public function assertBadRequest(?int $code = NULL, ?string $messagePattern = NULL): static
 	{
 		$this->responseInspected = TRUE;
 		Assert::type(BadRequestException::class, $this->badRequestException);

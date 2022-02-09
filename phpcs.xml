@@ -8,6 +8,14 @@
 		<exclude-pattern>src/*</exclude-pattern>
 	</rule>
 
+	<rule ref="Generic.PHP.LowerCaseType.ParamTypeFound">
+		<exclude-pattern>src/TestPresenterResult.php</exclude-pattern>
+	</rule>
+
+	<rule ref="Generic.PHP.LowerCaseType.ReturnTypeFound">
+		<exclude-pattern>src/Helpers/MemorySessionHandler.php</exclude-pattern>
+	</rule>
+
 	<rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration.NoAssignment">
 		<exclude-pattern>src/PresenterTester.php</exclude-pattern>
 	</rule>
