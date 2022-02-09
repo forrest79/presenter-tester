@@ -78,6 +78,7 @@ class MemorySessionHandler implements \SessionHandlerInterface
 	 * @param int $maxLifeTime
 	 * @return int|FALSE
 	 */
+	#[\ReturnTypeWillChange]
 	public function gc($maxLifeTime)
 	{
 		return 300;

@@ -61,7 +61,7 @@ class SessionSection extends Http\SessionSection
 
 	/**
 	 * @param string|NULL $time
-	 * @param string|array<string> $variables
+	 * @param string|array<string>|NULL $variables
 	 * @return static
 	 */
 	public function setExpiration($time, $variables = NULL): self
@@ -71,7 +71,7 @@ class SessionSection extends Http\SessionSection
 
 
 	/**
-	 * @param string|array<string> $variables
+	 * @param string|array<string>|NULL $variables
 	 */
 	public function removeExpiration($variables = NULL): void
 	{
