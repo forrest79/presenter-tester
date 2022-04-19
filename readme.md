@@ -14,7 +14,7 @@ Testing tool for Nette presenter with easy to use API.
 The recommended way to install is via Composer:
 
 ```
-composer require forrest79/presenter-tester
+composer require --dev forrest79/presenter-tester
 ```
 
 It requires PHP version 7.4.
