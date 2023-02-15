@@ -12,6 +12,15 @@ class Response implements Http\IResponse
 	/** @var array<string, string> */
 	private array $cookies = [];
 
+	/** This is used by Nette DI itself */
+	public string $cookieDomain = '';
+
+	/** This is used by Nette DI itself */
+	public string $cookiePath = '/';
+
+	/** This is used by Nette DI itself */
+	public bool $cookieSecure = FALSE;
+
 
 	public function setCode(int $code, string|NULL $reason = NULL): static
 	{
