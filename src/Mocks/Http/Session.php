@@ -143,7 +143,7 @@ class Session extends Http\Session
 	}
 
 
-	public function setExpiration(?string $time): static
+	public function setExpiration(string|NULL $time): static
 	{
 		return $this;
 	}
@@ -151,9 +151,9 @@ class Session extends Http\Session
 
 	public function setCookieParameters(
 		string $path,
-		?string $domain = NULL,
-		?bool $secure = NULL,
-		?string $samesite = NULL
+		string|NULL $domain = NULL,
+		bool|NULL $secure = NULL,
+		string|NULL $samesite = NULL,
 	): static
 	{
 		return $this;

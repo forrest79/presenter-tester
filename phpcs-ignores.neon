@@ -1,0 +1,235 @@
+ignoreErrors:
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $maxLifeTime.
+		count: 1
+		path: src/Helpers/MemorySessionHandler.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $savePath.
+		count: 1
+		path: src/Helpers/MemorySessionHandler.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $sessionName.
+		count: 1
+		path: src/Helpers/MemorySessionHandler.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $charset.
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $code.
+		count: 2
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $domain.
+		count: 2
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $expire.
+		count: 2
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $header.
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $httpOnly.
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $name.
+		count: 2
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $path.
+		count: 2
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $reason.
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $secure.
+		count: 2
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $type.
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $url.
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $value.
+		count: 2
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\Response::setCookie() does not have native type hint for its parameter $expire but it should be possible to add it based on @param annotation "\DateTimeInterface|int|string".'
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $domain.
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $forWrite.
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $handler.
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $name.
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $options.
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $path.
+		count: 2
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $samesite.
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $secure.
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $time.
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\Session::setOptions() does not have @param annotation for its traversable parameter $options.'
+		count: 1
+		path: src/Mocks/Http/Session.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $time.
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $variables.
+		count: 2
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.PHP.DisallowReference.DisallowedReturningReference
+		message: Returning reference is disallowed.
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::__set() does not have native type hint for its parameter $value but it should be possible to add it based on @param annotation "mixed".'
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::remove() does not have native type hint for its parameter $name but it should be possible to add it based on @param annotation "string|array|NULL".'
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::removeExpiration() does not have native type hint for its parameter $variables but it should be possible to add it based on @param annotation "string|array<string>|NULL".'
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::setExpiration() does not have native type hint for its parameter $time but it should be possible to add it based on @param annotation "string|NULL".'
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::setExpiration() does not have native type hint for its parameter $variables but it should be possible to add it based on @param annotation "string|array<string>|NULL".'
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+		message: '@param annotation of method \Forrest79\PresenterTester\Mocks\Http\SessionSection::remove() does not specify type hint for items of its traversable parameter $name.'
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::__get() does not have native return type hint for its return value but it should be possible to add it based on @return annotation "mixed".'
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
+		sniff: Squiz.Scope.MethodScope.Missing
+		message: Visibility must be declared on method "onRequest"
+		count: 1
+		path: src/PresenterTesterListener.php
+
+	-
+		sniff: Squiz.Scope.MethodScope.Missing
+		message: Visibility must be declared on method "onResult"
+		count: 1
+		path: src/PresenterTesterListener.php
+

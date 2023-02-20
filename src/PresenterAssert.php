@@ -14,8 +14,8 @@ class PresenterAssert
 	 */
 	public static function assertRequestMatch(
 		Request $expected,
-		?array $actual,
-		bool $onlyIntersectedParameters = TRUE
+		array|NULL $actual,
+		bool $onlyIntersectedParameters = TRUE,
 	): void
 	{
 		Assert::notSame(NULL, $actual);

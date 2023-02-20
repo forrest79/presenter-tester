@@ -9,16 +9,16 @@ class Request extends Http\Request
 	/** @var array<string, string> */
 	private array $headers = [];
 
-	private ?string $body = NULL;
+	private string|NULL $body = NULL;
 
 
-	public function setRawBody(?string $body): void
+	public function setRawBody(string|NULL $body): void
 	{
 		$this->body = $body;
 	}
 
 
-	public function getRawBody(): ?string
+	public function getRawBody(): string|NULL
 	{
 		return $this->body ?? parent::getRawBody();
 	}
@@ -30,7 +30,7 @@ class Request extends Http\Request
 	}
 
 
-	public function getHeader(string $header): ?string
+	public function getHeader(string $header): string|NULL
 	{
 		if (isset($this->headers[$header])) {
 			return $this->headers[$header];

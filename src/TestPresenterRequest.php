@@ -18,7 +18,7 @@ class TestPresenterRequest
 
 	private string $presenterName;
 
-	private ?PresenterTester $presenterTester;
+	private PresenterTester|NULL $presenterTester;
 
 	private string $methodName = 'GET';
 
@@ -31,7 +31,7 @@ class TestPresenterRequest
 	/** @var array<string, string> */
 	private array $post = [];
 
-	private ?string $rawBody = NULL;
+	private string|NULL $rawBody = NULL;
 
 	/** @var array<string, string> */
 	private array $cookies = [];
@@ -43,12 +43,12 @@ class TestPresenterRequest
 
 	private bool $shouldHaveIdentity = FALSE;
 
-	private ?IIdentity $identity = NULL;
+	private IIdentity|NULL $identity = NULL;
 
 	private bool $keepIdentity = FALSE;
 
 
-	public function __construct(string $presenterName, Session $session, ?PresenterTester $presenterTester = NULL)
+	public function __construct(string $presenterName, Session $session, PresenterTester|NULL $presenterTester = NULL)
 	{
 		$this->presenterName = $presenterName;
 		$this->session = $session;
@@ -97,7 +97,7 @@ class TestPresenterRequest
 	}
 
 
-	public function getRawBody(): ?string
+	public function getRawBody(): string|NULL
 	{
 		return $this->rawBody;
 	}
@@ -133,7 +133,7 @@ class TestPresenterRequest
 	}
 
 
-	public function getIdentity(): ?IIdentity
+	public function getIdentity(): IIdentity|NULL
 	{
 		return $this->identity;
 	}
@@ -279,7 +279,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withIdentity(?IIdentity $identity = NULL): self
+	public function withIdentity(IIdentity|NULL $identity = NULL): self
 	{
 		$request = clone $this;
 		$request->shouldHaveIdentity = TRUE;

@@ -54,7 +54,7 @@ class PresenterTester
 		IRequest $httpRequest,
 		User $user,
 		array $listeners = [],
-		?callable $identityFactory = NULL
+		callable|NULL $identityFactory = NULL,
 	)
 	{
 		$this->baseUrl = $baseUrl;

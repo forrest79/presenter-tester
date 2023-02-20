@@ -13,7 +13,7 @@ class Response implements Http\IResponse
 	private array $cookies = [];
 
 
-	public function setCode(int $code, ?string $reason = NULL): static
+	public function setCode(int $code, string|NULL $reason = NULL): static
 	{
 		return $this;
 	}
@@ -37,7 +37,7 @@ class Response implements Http\IResponse
 	}
 
 
-	public function setContentType(string $type, ?string $charset = NULL): static
+	public function setContentType(string $type, string|NULL $charset = NULL): static
 	{
 		return $this;
 	}
@@ -48,7 +48,7 @@ class Response implements Http\IResponse
 	}
 
 
-	public function setExpiration(?string $expire): static
+	public function setExpiration(string|NULL $expire): static
 	{
 		return $this;
 	}
@@ -60,7 +60,7 @@ class Response implements Http\IResponse
 	}
 
 
-	public function getHeader(string $header): ?string
+	public function getHeader(string $header): string|NULL
 	{
 		return NULL;
 	}
@@ -83,10 +83,10 @@ class Response implements Http\IResponse
 		string $name,
 		string $value,
 		$expire,
-		?string $path = NULL,
-		?string $domain = NULL,
-		?bool $secure = NULL,
-		?bool $httpOnly = NULL
+		string|NULL $path = NULL,
+		string|NULL $domain = NULL,
+		bool|NULL $secure = NULL,
+		bool|NULL $httpOnly = NULL,
 	): self
 	{
 		$this->cookies[$name] = $value;
@@ -94,7 +94,12 @@ class Response implements Http\IResponse
 	}
 
 
-	public function deleteCookie(string $name, ?string $path = NULL, ?string $domain = NULL, ?bool $secure = NULL): void
+	public function deleteCookie(
+		string $name,
+		string|NULL $path = NULL,
+		string|NULL $domain = NULL,
+		bool|NULL $secure = NULL,
+	): void
 	{
 		unset($this->cookies[$name]);
 	}

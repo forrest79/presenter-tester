@@ -26,11 +26,11 @@ class TestPresenterResult
 
 	private Request $request;
 
-	private ?Response $response;
+	private Response|NULL $response;
 
-	private ?string $textResponseSource = NULL;
+	private string|NULL $textResponseSource = NULL;
 
-	private ?BadRequestException $badRequestException;
+	private BadRequestException|NULL $badRequestException;
 
 	private bool $responseInspected = FALSE;
 
@@ -39,8 +39,8 @@ class TestPresenterResult
 		Router $router,
 		Request $request,
 		IPresenter $presenter,
-		?Response $response,
-		?BadRequestException $badRequestException
+		Response|NULL $response,
+		BadRequestException|NULL $badRequestException,
 	)
 	{
 		$this->presenter = $presenter;
@@ -131,7 +131,7 @@ class TestPresenterResult
 	}
 
 
-	public function assertHasResponse(?string $type = NULL): static
+	public function assertHasResponse(string|NULL $type = NULL): static
 	{
 		$this->responseInspected = TRUE;
 		Assert::type($type ?? Response::class, $this->response);
@@ -217,7 +217,7 @@ class TestPresenterResult
 	public function assertRedirectsAction(
 		string $presenterName,
 		string $action = 'default',
-		array $parameters = []
+		array $parameters = [],
 	): static
 	{
 		if (isset($parameters['action'])) {
@@ -277,7 +277,7 @@ class TestPresenterResult
 	/**
 	 * @param array<string> $formErrors
 	 */
-	public function assertFormHasErrors(string $formName, ?array $formErrors = NULL): static
+	public function assertFormHasErrors(string $formName, array|NULL $formErrors = NULL): static
 	{
 		$this->responseInspected = TRUE;
 		$presenter = $this->getUIPresenter();
@@ -294,7 +294,7 @@ class TestPresenterResult
 	}
 
 
-	public function assertBadRequest(?int $code = NULL, ?string $messagePattern = NULL): static
+	public function assertBadRequest(int|NULL $code = NULL, string|NULL $messagePattern = NULL): static
 	{
 		$this->responseInspected = TRUE;
 		Assert::type(BadRequestException::class, $this->badRequestException);

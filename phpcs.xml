@@ -4,20 +4,8 @@
 
 	<rule ref="./vendor/forrest79/phpcs/Forrest79CodingStandard/ruleset.xml"/>
 
-	<rule ref="Generic.PHP.LowerCaseType.ParamTypeFound">
-		<exclude-pattern>src/TestPresenterResult.php</exclude-pattern>
-	</rule>
-
-	<rule ref="Generic.PHP.LowerCaseType.ReturnTypeFound">
-		<exclude-pattern>src/Helpers/MemorySessionHandler.php</exclude-pattern>
-	</rule>
-
 	<rule ref="SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal">
 		<exclude-pattern>src/*</exclude-pattern>
-	</rule>
-
-	<rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration.NoAssignment">
-		<exclude-pattern>src/PresenterTester.php</exclude-pattern>
 	</rule>
 
 	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
@@ -26,50 +14,5 @@
 				src=>Forrest79\PresenterTester,
 			"/>
 		</properties>
-	</rule>
-
-	<!-- PHP 8.0 -->
-	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration.MissingTrailingComma">
-		<exclude-pattern>src/PresenterAssert.php</exclude-pattern>
-		<exclude-pattern>src/PresenterTester.php</exclude-pattern>
-		<exclude-pattern>src/TestPresenterResult.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/Response.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
-	</rule>
-
-	<rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">
-		<exclude-pattern>src/Helpers/MemorySessionHandler.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/Response.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
-	</rule>
-
-	<rule ref="SlevomatCodingStandard.PHP.DisallowReference.DisallowedReturningReference">
-		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
-	</rule>
-
-	<!-- PHP 8.0 -->
-	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
-		<exclude-pattern>src/TestPresenterResult.php</exclude-pattern>
-		<exclude-pattern>src/Helpers/MemorySessionHandler.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/Response.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
-	</rule>
-
-	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification">
-		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
-	</rule>
-
-	<!-- PHP 8.0 -->
-	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
-		<exclude-pattern>src/Helpers/MemorySessionHandler.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/Session.php</exclude-pattern>
-		<exclude-pattern>src/Mocks/Http/SessionSection.php</exclude-pattern>
-	</rule>
-
-	<rule ref="Squiz.Scope.MethodScope.Missing">
-		<exclude-pattern>src/PresenterTesterListener.php</exclude-pattern>
 	</rule>
 </ruleset>
