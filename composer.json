@@ -8,14 +8,14 @@
 		"nette/application": "^3.0",
 		"nette/security": "^3.0",
 		"nette/forms": "^3.0",
-		"nette/tester": "^2.4"
+		"nette/tester": "^2.5"
 	},
 	"require-dev": {
-		"forrest79/phpcs": "^0.8",
+		"forrest79/phpcs": "^0.9",
 		"forrest79/phpcs-ignores": "^0.1",
 		"nette/mail": "^3.0",
-		"phpstan/phpstan": "^1.9",
-		"phpstan/phpstan-strict-rules": "^1.4"
+		"phpstan/phpstan": "^1.10",
+		"phpstan/phpstan-strict-rules": "^1.5"
 	},
 	"autoload": {
 		"psr-4": {

@@ -28,7 +28,7 @@ class TestPresenterRequest
 	/** @var array<string, mixed> */
 	private array $parameters = [];
 
-	/** @var array<string, string> */
+	/** @var array<string, mixed> */
 	private array $post = [];
 
 	private string|NULL $rawBody = NULL;
@@ -89,7 +89,7 @@ class TestPresenterRequest
 
 
 	/**
-	 * @return array<string, string>
+	 * @return array<string, mixed>
 	 */
 	public function getPost(): array
 	{
@@ -180,7 +180,7 @@ class TestPresenterRequest
 
 
 	/**
-	 * @param array<string, string> $post
+	 * @param array<string, mixed> $post
 	 * @param array<string, mixed> $files
 	 */
 	public function withForm(string $formName, array $post, array $files = [], bool $withProtection = TRUE): self

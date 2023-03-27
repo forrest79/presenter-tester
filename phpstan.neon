@@ -7,11 +7,6 @@ parameters:
 		- Nette\Http\SessionSection
 	ignoreErrors:
 		-
-			message: '#Property Nette\\Http\\Request::\$(headers|post|url|method|cookies) is not writable\.#'
-			path: %rootDir%/../../../src/PresenterTester.php
-			count: 5
-
-		-
 			message: '#Call to an undefined method object\:\:__toString\(\)\.#'
 			path: %rootDir%/../../../src/TestPresenterResult.php
 			count: 1
