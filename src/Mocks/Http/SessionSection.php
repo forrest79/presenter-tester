@@ -40,7 +40,7 @@ class SessionSection extends Http\SessionSection
 	public function &__get(string $name)
 	{
 		if ($this->warnOnUndefined && !array_key_exists($name, $this->data)) {
-			trigger_error(sprintf('The variable \'%s\' does not exist in session section', $name), E_USER_NOTICE);
+			trigger_error(sprintf('The variable \'%s\' does not exist in session section', $name));
 		}
 
 		return $this->data[$name];
@@ -60,10 +60,10 @@ class SessionSection extends Http\SessionSection
 
 
 	/**
-	 * @param string|NULL $time
+	 * @param string|NULL $expire
 	 * @param string|array<string>|NULL $variables
 	 */
-	public function setExpiration($time, $variables = NULL): static
+	public function setExpiration($expire, $variables = NULL): static
 	{
 		return $this;
 	}
@@ -78,7 +78,7 @@ class SessionSection extends Http\SessionSection
 
 
 	/**
-	 * @param string|array|NULL $name
+	 * @param string|array<string>|NULL $name
 	 */
 	public function remove($name = NULL): void
 	{

@@ -141,7 +141,7 @@ class TestPresenterResult
 
 
 	/**
-	 * @param string|array<string>|NULL $match
+	 * @param string|list<string>|NULL $match
 	 */
 	public function assertRenders(string|array|NULL $match = NULL): static
 	{
@@ -160,7 +160,7 @@ class TestPresenterResult
 
 
 	/**
-	 * @param string|array<string> $matches
+	 * @param string|list<string> $matches
 	 */
 	public function assertNotRenders(string|array $matches): static
 	{
@@ -181,7 +181,7 @@ class TestPresenterResult
 
 
 	/**
-	 * @param array<mixed>|object|NULL $expected
+	 * @param list<mixed>|object|NULL $expected
 	 */
 	public function assertJson(array|object|NULL $expected = NULL): static
 	{
@@ -275,7 +275,7 @@ class TestPresenterResult
 
 
 	/**
-	 * @param array<string> $formErrors
+	 * @param list<string> $formErrors
 	 */
 	public function assertFormHasErrors(string $formName, array|NULL $formErrors = NULL): static
 	{

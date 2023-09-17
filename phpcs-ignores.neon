@@ -7,13 +7,13 @@ ignoreErrors:
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-		message: Unused parameter $savePath.
+		message: Unused parameter $path.
 		count: 1
 		path: src/Helpers/MemorySessionHandler.php
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-		message: Unused parameter $sessionName.
+		message: Unused parameter $name.
 		count: 1
 		path: src/Helpers/MemorySessionHandler.php
 
@@ -145,7 +145,7 @@ ignoreErrors:
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-		message: Unused parameter $samesite.
+		message: Unused parameter $sameSite.
 		count: 1
 		path: src/Mocks/Http/Session.php
 
@@ -169,7 +169,7 @@ ignoreErrors:
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-		message: Unused parameter $time.
+		message: Unused parameter $expire.
 		count: 1
 		path: src/Mocks/Http/SessionSection.php
 
@@ -193,7 +193,7 @@ ignoreErrors:
 
 	-
 		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::remove() does not have native type hint for its parameter $name but it should be possible to add it based on @param annotation "string|array|NULL".'
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::remove() does not have native type hint for its parameter $name but it should be possible to add it based on @param annotation "string|array<string>|NULL".'
 		count: 1
 		path: src/Mocks/Http/SessionSection.php
 
@@ -205,19 +205,13 @@ ignoreErrors:
 
 	-
 		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::setExpiration() does not have native type hint for its parameter $time but it should be possible to add it based on @param annotation "string|NULL".'
+		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::setExpiration() does not have native type hint for its parameter $expire but it should be possible to add it based on @param annotation "string|NULL".'
 		count: 1
 		path: src/Mocks/Http/SessionSection.php
 
 	-
 		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::setExpiration() does not have native type hint for its parameter $variables but it should be possible to add it based on @param annotation "string|array<string>|NULL".'
-		count: 1
-		path: src/Mocks/Http/SessionSection.php
-
-	-
-		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
-		message: '@param annotation of method \Forrest79\PresenterTester\Mocks\Http\SessionSection::remove() does not specify type hint for items of its traversable parameter $name.'
 		count: 1
 		path: src/Mocks/Http/SessionSection.php
 

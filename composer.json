@@ -11,9 +11,9 @@
 		"nette/tester": "^2.5"
 	},
 	"require-dev": {
-		"forrest79/phpcs": "^0.9",
-		"forrest79/phpcs-ignores": "^0.1",
-		"nette/mail": "^3.0",
+		"forrest79/phpcs": "^1.2",
+		"forrest79/phpcs-ignores": "^0.3",
+		"nette/mail": "^3.0 | ^4.0",
 		"phpstan/phpstan": "^1.10",
 		"phpstan/phpstan-strict-rules": "^1.5"
 	},

@@ -10,7 +10,7 @@ class MemorySessionHandler implements \SessionHandlerInterface
 	private array $sessionData = [];
 
 
-	public function open(string $savePath, string $sessionName): bool
+	public function open(string $path, string $name): bool
 	{
 		return TRUE;
 	}

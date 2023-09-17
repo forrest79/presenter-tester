@@ -6,7 +6,7 @@ use Nette\Http;
 
 class Session extends Http\Session
 {
-	/** @var array<SessionSection> */
+	/** @var array<string, SessionSection> */
 	private array $sections = [];
 
 	private bool $started = FALSE;
@@ -153,7 +153,7 @@ class Session extends Http\Session
 		string $path,
 		string|NULL $domain = NULL,
 		bool|NULL $secure = NULL,
-		string|NULL $samesite = NULL,
+		string|NULL $sameSite = NULL,
 	): static
 	{
 		return $this;

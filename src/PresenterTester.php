@@ -38,12 +38,12 @@ class PresenterTester
 	/** @var callable|NULL */
 	private $identityFactory;
 
-	/** @var array<TestPresenterResult> */
+	/** @var list<TestPresenterResult> */
 	private array $results = [];
 
 
 	/**
-	 * @param array<PresenterTesterListener> $listeners
+	 * @param list<PresenterTesterListener> $listeners
 	 */
 	public function __construct(
 		string $baseUrl,
@@ -110,7 +110,7 @@ class PresenterTester
 
 
 	/**
-	 * @return array<TestPresenterResult>
+	 * @return list<TestPresenterResult>
 	 */
 	public function getResults(): array
 	{

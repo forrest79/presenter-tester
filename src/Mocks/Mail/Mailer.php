@@ -6,7 +6,7 @@ use Nette\Mail;
 
 final class Mailer implements Mail\Mailer, \Countable
 {
-	/** @var array<Mail\Message> */
+	/** @var list<Mail\Message> */
 	private array $messages = [];
 
 
@@ -23,7 +23,7 @@ final class Mailer implements Mail\Mailer, \Countable
 
 
 	/**
-	 * @return array<Mail\Message>
+	 * @return list<Mail\Message>
 	 */
 	public function getMessages(): array
 	{

@@ -17,18 +17,18 @@ The recommended way to install is via Composer:
 composer require --dev forrest79/presenter-tester
 ```
 
-It requires PHP version 7.4.
+It requires PHP version 8.1.
 
 ## Integration & configuration
 
-If you are using power of Nette DI Container in your tests, you can use Presenter Tester in your current testing environment. All you need is to register PresenterTester service in `.neon` configuration for tests.
+If you are using the power of Nette DI Container in your tests, you can use Presenter Tester in your current testing environment. All you need is to register PresenterTester service in `.neon` configuration for tests.
 
 ```yaml
 services:
 	- Forrest79\PresenterTester\PresenterTester(baseUrl: "http://my-app.test")
 ```
 
-You can also specify list of [listeners](#listeners):
+You can also specify a list of [listeners](#listeners):
 
 ```yaml
 parameters:
@@ -61,13 +61,13 @@ As you can see, you first create a `TestPresenterRequest` using `createRequest` 
 
 After the test request is configured, you pass it to `execute` method, which performs presenter execution and returns `TestPresenterResult`, which wraps `Nette\Application\IResponse` with some additional data collected during execution.
 
-The `TestPresenterResult` contains many useful assert functions like render check or form validity check. In our example there is `assertRenders` method, which asserts that presenter returns `TextResponse` and that the text contains given pattern. You probably already know the pattern format from [Tester\Assert::match()](https://tester.nette.org/en/writing-tests#toc-assert-match) function.
+The `TestPresenterResult` contains many useful assert functions like render check or form validity check. In our example there is `assertRenders` method, which asserts that presenter returns `TextResponse` and that the text contains a given pattern. You probably already know the pattern format from [Tester\Assert::match()](https://tester.nette.org/en/writing-tests#toc-assert-match) function.
 
 ## Helpers
 
 ### MemorySessionHandler
 
-To bypass PHP session you can use for testing saving session just to memory. To do this, simply call this before running tests:
+To bypass PHP session, you can use it for testing saving session just to memory. To do this, simply call this before running tests:
 
 ```php
 Forrest79\PresenterTester\Helpers\MemorySessionHandler::install();
@@ -88,7 +88,7 @@ services:
 	http.request: Nette\Http\Request(
 		url: Nette\Http\UrlScript(%baseUrl%)
 		cookies: ['_nss': true] # Nette\Http\Helpers::STRICT_COOKIE_NAME
-		remoteAddress: '255.254.253.252' # you can set also some others values, for example REMOTE_ADDRESS
+		remoteAddress: '255.254.253.252' # you can set also some other values, for example, REMOTE_ADDRESS
 	)
 ```
 
@@ -98,13 +98,13 @@ Or you can use mocked `Http\Request` like this:
 services:
 	http.request: Forrest79\PresenterTester\Mocks\Http\Request(
 		url: Nette\Http\UrlScript('http://my-app.dev')
-		remoteAddress: '255.254.253.252' # you can set also some others values, for example REMOTE_ADDRESS
+		remoteAddress: '255.254.253.252' # you can set also some other values, for example, REMOTE_ADDRESS
 	)
 ```
 
 ### Http\Response
 
-If you want to test cookies, that're sent, use mocked `Http\Response`:
+If you want to test cookies, that are sent, use mocked `Http\Response`:
 
 ```yaml
 services:
@@ -146,7 +146,7 @@ Then get `Forrest79\PresenterTester\Mocks\Mail\Mailer` service from DI container
 Set application request parameters.
 
 ### `withForm(string $formName, array $post, array $files)`
-Add form submission data to request. You have to specify full component tree path to in `$formName`.
+Add form submission data to request. You have to specify a full component tree path to in `$formName`.
 
 Presenter Tester supports forms with CSRF protection, but since it uses session, it is recommended to install [mangoweb/tester-http-mocks](https://github.com/mangoweb-backend/tester-http-mocks) package.
 
@@ -154,7 +154,7 @@ Presenter Tester supports forms with CSRF protection, but since it uses session,
 With Presenter Tester, you can also easily test signal method.
 
 ### `withAjax`
-(Not only) signals often uses AJAX, which you can enable using this method.
+(Not only) signals often use AJAX, which you can enable using this method.
 
 ### `withMethod(string $methodName)`
 Change the HTTP method. The default is `GET`. You don't have to explicitly set a method for forms.
@@ -163,7 +163,7 @@ Change the HTTP method. The default is `GET`. You don't have to explicitly set a
 Pass additional HTTP headers.
 
 ### `withIdentity(Nette\Security\IIdentity $identity)`
-Change identity of User, which is executing given request. This is useful when login is required to perform the action. You can implement [identity factory](#identity-factory), which provides a default identity for each request.
+Change the identity of the User, which is executing given request. This is useful when login is required to perform the action. You can implement [identity factory](#identity-factory), which provides a default identity for each request.
 
 ### `withPost(array $post)`
 ### `withFiles(array $files)`
@@ -176,16 +176,16 @@ It is a result of test execution. It wraps `Nette\Application\IResponse` and add
 Checks that response is `TextResponse`. Also, you can provide a `$match` parameter to check that response contains some text. You can either pass [pattern](https://tester.nette.org/en/writing-tests#toc-assert-match) or an array plain strings.
 
 ### `assertNotRenders($matches)`
-Checks that given pattern or strings were not rendered.
+Checks that have given pattern or strings were not rendered.
 
 ### `assertJson($expected)`
-Checks that response is JSON. You can optionally pass expected payload.
+Check that response is JSON. You can optionally pass the expected payload.
 
 ### `assertBadRequest($code)`
-Checks that requests terminates with bad request exception (e.g. 404 not found).
+Checks that requests terminates with bad request exception (e.g., 404 not found).
 
 ### `assertRedirects(string $presenterName, array $parameters)`
-Checks that request redirects to given presenter. You can also pass parameters to check. Extra parameters in redirect request are ignored.
+Check that request redirects to given presenter. You can also pass parameters to check. Extra parameters in redirect request are ignored.
 
 ### `assertRedirectsUrl($url)`
 ### `assertFormValid($formName)`
@@ -195,10 +195,10 @@ Also, there are methods like `getResponse` or `getPresenter` to access original 
 
 ## Listeners
 
-You can hook to some events by implementing `Forrest79\PresenterTester\PresenterTesterListener` interface. Then you can e.g. modify test request or execute some implicit result checks.
+You can hook to some events by implementing `Forrest79\PresenterTester\PresenterTesterListener` interface. Then you can, e.g., modify test request or execute some implicit result checks.
 
 To register a listener, simply register it as a service in DI container (infrastructure container if you are using Mango Tester Infrastructure).
 
 ## Identity factory
 
-Using identity factory you can implement a factory which creates a default identity. The factory is a simple PHP callback, which accepts `PresenterTestRequest` and returns `Nette\Security\IIdentity`.
+Using identity factory, you can implement a factory which creates a default identity. The factory is a simple PHP callback, which accepts `PresenterTestRequest` and returns `Nette\Security\IIdentity`.

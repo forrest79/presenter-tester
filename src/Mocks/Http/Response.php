@@ -52,7 +52,7 @@ class Response implements Http\IResponse
 	}
 
 
-	public function redirect(string $url, int $code = self::S302_FOUND): void
+	public function redirect(string $url, int $code = self::S302_Found): void
 	{
 	}
 
@@ -86,7 +86,6 @@ class Response implements Http\IResponse
 
 	/**
 	 * @param \DateTimeInterface|int|string $expire
-	 * @return static
 	 */
 	public function setCookie(
 		string $name,
@@ -96,7 +95,7 @@ class Response implements Http\IResponse
 		string|NULL $domain = NULL,
 		bool|NULL $secure = NULL,
 		bool|NULL $httpOnly = NULL,
-	): self
+	): static
 	{
 		$this->cookies[$name] = $value;
 		return $this;

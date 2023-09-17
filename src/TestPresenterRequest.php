@@ -5,15 +5,12 @@ namespace Forrest79\PresenterTester;
 use Nette\Forms\Controls\CsrfProtection;
 use Nette\Http\Session;
 use Nette\Security\IIdentity;
-use Nette\SmartObject;
 
 /**
  * Immutable object
  */
 class TestPresenterRequest
 {
-	use SmartObject;
-
 	private Session $session;
 
 	private string $presenterName;
