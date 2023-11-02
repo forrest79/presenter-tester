@@ -1,7 +1,19 @@
 ignoreErrors:
 	-
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
+		count: 1
+		path: src/Helpers/MemorySessionHandler.php
+
+	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 		message: Unused parameter $maxLifeTime.
+		count: 1
+		path: src/Helpers/MemorySessionHandler.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $name.
 		count: 1
 		path: src/Helpers/MemorySessionHandler.php
 
@@ -12,10 +24,22 @@ ignoreErrors:
 		path: src/Helpers/MemorySessionHandler.php
 
 	-
-		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-		message: Unused parameter $name.
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
 		count: 1
-		path: src/Helpers/MemorySessionHandler.php
+		path: src/Mocks/Http/Request.php
+
+	-
+		sniff: SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
+		message: Do not use public properties. Use method access instead.
+		count: 3
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
+		count: 1
+		path: src/Mocks/Http/Response.php
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
@@ -96,16 +120,16 @@ ignoreErrors:
 		path: src/Mocks/Http/Response.php
 
 	-
-		sniff: SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
-		message: Do not use public properties. Use method access instead.
-		count: 3
-		path: src/Mocks/Http/Response.php
-
-	-
 		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 		message: 'Method \Forrest79\PresenterTester\Mocks\Http\Response::setCookie() does not have native type hint for its parameter $expire but it should be possible to add it based on @param annotation "\DateTimeInterface|int|string".'
 		count: 1
 		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
+		count: 1
+		path: src/Mocks/Http/Session.php
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
@@ -168,6 +192,12 @@ ignoreErrors:
 		path: src/Mocks/Http/Session.php
 
 	-
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
+		count: 1
+		path: src/Mocks/Http/SessionSection.php
+
+	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 		message: Unused parameter $expire.
 		count: 1
@@ -222,6 +252,18 @@ ignoreErrors:
 		path: src/Mocks/Http/SessionSection.php
 
 	-
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
+		count: 1
+		path: src/PresenterAssert.php
+
+	-
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
+		count: 1
+		path: src/PresenterTester.php
+
+	-
 		sniff: Squiz.Scope.MethodScope.Missing
 		message: Visibility must be declared on method "onRequest"
 		count: 1
@@ -232,4 +274,16 @@ ignoreErrors:
 		message: Visibility must be declared on method "onResult"
 		count: 1
 		path: src/PresenterTesterListener.php
+
+	-
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
+		count: 1
+		path: src/TestPresenterRequest.php
+
+	-
+		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+		message: All classes should be declared using either the "abstract" or "final" keyword.
+		count: 1
+		path: src/TestPresenterResult.php
 

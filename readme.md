@@ -3,7 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/forrest79/presenter-tester/v)](//packagist.org/packages/forrest79/presenter-tester)
 [![Monthly Downloads](https://poser.pugx.org/forrest79/presenter-tester/d/monthly)](//packagist.org/packages/forrest79/presenter-tester)
 [![License](https://poser.pugx.org/forrest79/presenter-tester/license)](//packagist.org/packages/forrest79/presenter-tester)
-[![Build](https://github.com/forrest79/PresenterTester/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/forrest79/PresenterTester/actions/workflows/build.yml)
+[![Build](https://github.com/forrest79/presenter-tester/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/forrest79/presenter-tester/actions/workflows/build.yml)
 
 > [Mango Presenter Tester](https://github.com/mangoweb-backend/presenter-tester) fork just for personal use with some tweaks.
 

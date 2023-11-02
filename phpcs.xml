@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="SimpleTranslator">
-	<exclude-pattern>tests/*</exclude-pattern>
-
 	<rule ref="./vendor/forrest79/phpcs/Forrest79CodingStandard/ruleset.xml"/>
-
-	<rule ref="SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal">
-		<exclude-pattern>src/*</exclude-pattern>
-	</rule>
 
 	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
 		<properties>
