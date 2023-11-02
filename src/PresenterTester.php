@@ -76,6 +76,12 @@ class PresenterTester
 			$testRequest = $listener->onRequest($testRequest);
 		}
 		$applicationRequest = self::createApplicationRequest($testRequest);
+
+		// Inject application request into private Application::$requests
+		(function () use ($applicationRequest): void {
+			$this->requests = [$applicationRequest];
+		})->call($this->application);
+
 		$presenter = $this->createPresenter($testRequest);
 		if ($applicationRequest->getMethod() === 'GET') {
 			$params = $this->router->match($this->httpRequest);
