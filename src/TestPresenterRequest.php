@@ -44,6 +44,8 @@ class TestPresenterRequest
 
 	private bool $keepIdentity = FALSE;
 
+	private bool $injectedRequest = FALSE;
+
 
 	public function __construct(string $presenterName, Session $session, PresenterTester|NULL $presenterTester = NULL)
 	{
@@ -139,6 +141,12 @@ class TestPresenterRequest
 	public function getKeepIdentity(): bool
 	{
 		return $this->keepIdentity;
+	}
+
+
+	public function getInjectedRequest(): bool
+	{
+		return $this->injectedRequest;
 	}
 
 
@@ -290,6 +298,15 @@ class TestPresenterRequest
 	{
 		$request = clone $this;
 		$request->keepIdentity = $enable;
+
+		return $request;
+	}
+
+
+	public function withInjectedRequest(bool $enable = TRUE): self
+	{
+		$request = clone $this;
+		$request->injectedRequest = $enable;
 
 		return $request;
 	}
