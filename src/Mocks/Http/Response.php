@@ -95,6 +95,7 @@ class Response implements Http\IResponse
 		string|NULL $domain = NULL,
 		bool|NULL $secure = NULL,
 		bool|NULL $httpOnly = NULL,
+		string|NULL $sameSite = NULL,
 	): static
 	{
 		$this->cookies[$name] = $value;

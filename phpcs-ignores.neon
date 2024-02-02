@@ -79,6 +79,12 @@ ignoreErrors:
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $sameSite.
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 		message: Unused parameter $name.
 		count: 2
 		path: src/Mocks/Http/Response.php
@@ -186,12 +192,6 @@ ignoreErrors:
 		path: src/Mocks/Http/Session.php
 
 	-
-		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\Session::setOptions() does not have @param annotation for its traversable parameter $options.'
-		count: 1
-		path: src/Mocks/Http/Session.php
-
-	-
 		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
 		message: All classes should be declared using either the "abstract" or "final" keyword.
 		count: 1
@@ -218,36 +218,6 @@ ignoreErrors:
 	-
 		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::__set() does not have native type hint for its parameter $value but it should be possible to add it based on @param annotation "mixed".'
-		count: 1
-		path: src/Mocks/Http/SessionSection.php
-
-	-
-		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::remove() does not have native type hint for its parameter $name but it should be possible to add it based on @param annotation "string|array<string>|NULL".'
-		count: 1
-		path: src/Mocks/Http/SessionSection.php
-
-	-
-		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::removeExpiration() does not have native type hint for its parameter $variables but it should be possible to add it based on @param annotation "string|array<string>|NULL".'
-		count: 1
-		path: src/Mocks/Http/SessionSection.php
-
-	-
-		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::setExpiration() does not have native type hint for its parameter $expire but it should be possible to add it based on @param annotation "string|NULL".'
-		count: 1
-		path: src/Mocks/Http/SessionSection.php
-
-	-
-		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::setExpiration() does not have native type hint for its parameter $variables but it should be possible to add it based on @param annotation "string|array<string>|NULL".'
-		count: 1
-		path: src/Mocks/Http/SessionSection.php
-
-	-
-		sniff: SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\SessionSection::__get() does not have native return type hint for its return value but it should be possible to add it based on @return annotation "mixed".'
 		count: 1
 		path: src/Mocks/Http/SessionSection.php
 

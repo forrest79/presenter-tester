@@ -128,6 +128,9 @@ class Session extends Http\Session
 	}
 
 
+	/**
+	 * @param array<mixed> $options
+	 */
 	public function setOptions(array $options): static
 	{
 		return $this;
