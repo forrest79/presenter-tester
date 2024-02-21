@@ -11,6 +11,8 @@ use Nette\Security\IIdentity;
  */
 class TestPresenterRequest
 {
+	private const CSRF_TOKEN = 'test-token';
+
 	private Session $session;
 
 	private string $presenterName;
@@ -53,7 +55,7 @@ class TestPresenterRequest
 		$this->session = $session;
 		$this->presenterTester = $presenterTester;
 
-		$session->getSection(CsrfProtection::class)->token = 'mango.token';
+		$session->getSection(CsrfProtection::class)->set('token', self::CSRF_TOKEN);
 	}
 
 
@@ -196,7 +198,7 @@ class TestPresenterRequest
 
 			$random = 'abcdefghij';
 			// The same logic as vendor/nette/forms/src/Forms/Controls/CsrfProtection.php::generateToken(...)
-			$token = $random . base64_encode(sha1(('mango.token' ^ $this->session->getId()) . $random, TRUE));
+			$token = $random . base64_encode(sha1((self::CSRF_TOKEN ^ $this->session->getId()) . $random, TRUE));
 			$post += ['_token_' => $token];
 		}
 		$request->post = $post;
