@@ -84,13 +84,10 @@ class Response implements Http\IResponse
 	}
 
 
-	/**
-	 * @param \DateTimeInterface|int|string $expire
-	 */
 	public function setCookie(
 		string $name,
 		string $value,
-		$expire,
+		string|int|\DateTimeInterface|NULL $expire,
 		string|NULL $path = NULL,
 		string|NULL $domain = NULL,
 		bool|NULL $secure = NULL,

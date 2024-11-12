@@ -45,6 +45,7 @@ class Request extends Http\Request
 	 */
 	public function getHeaders(): array
 	{
+		/** @phpstan-var array<string, string> */
 		return array_merge(parent::getHeaders(), $this->headers);
 	}
 

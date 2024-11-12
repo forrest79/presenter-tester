@@ -126,12 +126,6 @@ ignoreErrors:
 		path: src/Mocks/Http/Response.php
 
 	-
-		sniff: SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-		message: 'Method \Forrest79\PresenterTester\Mocks\Http\Response::setCookie() does not have native type hint for its parameter $expire but it should be possible to add it based on @param annotation "\DateTimeInterface|int|string".'
-		count: 1
-		path: src/Mocks/Http/Response.php
-
-	-
 		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
 		message: All classes should be declared using either the "abstract" or "final" keyword.
 		count: 1

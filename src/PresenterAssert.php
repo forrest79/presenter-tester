@@ -10,7 +10,7 @@ class PresenterAssert
 {
 
 	/**
-	 * @param array<string, mixed>|NULL $actual
+	 * @param array<mixed>|NULL $actual
 	 */
 	public static function assertRequestMatch(
 		Request $expected,
@@ -37,6 +37,7 @@ class PresenterAssert
 
 			$expectedParameter = $expectedParameters[$key];
 			if (is_string($actualParameter) && !is_string($expectedParameter)) {
+				assert(is_scalar($expectedParameter));
 				$expectedParameter = (string) $expectedParameter;
 			}
 

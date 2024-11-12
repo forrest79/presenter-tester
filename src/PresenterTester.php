@@ -13,6 +13,7 @@ use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\UrlScript;
 use Nette\Routing\Router;
+use Nette\Security\IIdentity;
 use Nette\Security\User;
 use Nette\Utils\Arrays;
 
@@ -25,8 +26,6 @@ class PresenterTester
 	private IPresenterFactory $presenterFactory;
 
 	private Router $router;
-
-	private Request $httpRequest;
 
 	private string $baseUrl;
 
@@ -51,7 +50,6 @@ class PresenterTester
 		Session $session,
 		IPresenterFactory $presenterFactory,
 		Router $router,
-		IRequest $httpRequest,
 		User $user,
 		array $listeners = [],
 		callable|NULL $identityFactory = NULL,
@@ -62,8 +60,6 @@ class PresenterTester
 		$this->session = $session;
 		$this->presenterFactory = $presenterFactory;
 		$this->router = $router;
-		assert($httpRequest instanceof Request);
-		$this->httpRequest = $httpRequest;
 		$this->user = $user;
 		$this->listeners = $listeners;
 		$this->identityFactory = $identityFactory;
@@ -84,9 +80,10 @@ class PresenterTester
 			})->call($this->application);
 		}
 
+		$httpRequest = $this->createHttpRequest($testRequest);
 		$presenter = $this->createPresenter($testRequest);
 		if ($applicationRequest->getMethod() === 'GET') {
-			$params = $this->router->match($this->httpRequest);
+			$params = $this->router->match($httpRequest);
 			PresenterAssert::assertRequestMatch($applicationRequest, $params);
 		}
 
@@ -126,10 +123,35 @@ class PresenterTester
 	}
 
 
+	protected function createHttpRequest(TestPresenterRequest $request): IRequest
+	{
+		$appRequest = self::createApplicationRequest($request);
+		$refUrl = new UrlScript($this->baseUrl, '/');
+
+		$routerUrl = $this->router->constructUrl($appRequest->toArray(), $refUrl);
+		assert(is_string($routerUrl));
+
+		$headers = $request->getHeaders();
+		if ($request->isAjax()) {
+			$headers['x-requested-with'] = 'XMLHttpRequest';
+		} else {
+			unset($headers['x-requested-with']);
+		}
+
+		return new Request(
+			url: new UrlScript($routerUrl, '/'),
+			post: $request->getPost(),
+			cookies: $request->getCookies(),
+			headers: $headers,
+			method: ($request->getPost() !== [] || $request->getRawBody() !== NULL) ? 'POST' : 'GET',
+			rawBodyCallback: static fn (): string|NULL => $request->getRawBody(),
+		);
+	}
+
+
 	protected function createPresenter(TestPresenterRequest $request): IPresenter
 	{
 		$this->loginUser($request);
-		$this->setupHttpRequest($request);
 		$presenter = $this->presenterFactory->createPresenter($request->getPresenterName());
 		if ($presenter instanceof Presenter) {
 			$this->setupUIPresenter($presenter);
@@ -164,36 +186,14 @@ class PresenterTester
 				throw new \LogicException('identityFactory is not set');
 			}
 			$identity = ($this->identityFactory)($request);
+			if (!$identity instanceof IIdentity) {
+				throw new \LogicException('identityFactory is not returning IIdentity');
+			}
 		}
-		if ($identity) {
+
+		if ($identity !== NULL) {
 			$this->user->login($identity);
 		}
-	}
-
-
-	protected function setupHttpRequest(TestPresenterRequest $request): void
-	{
-		$appRequest = self::createApplicationRequest($request);
-		$refUrl = new UrlScript($this->baseUrl, '/');
-
-		$routerUrl = $this->router->constructUrl($appRequest->toArray(), $refUrl);
-		assert(is_string($routerUrl));
-		$url = new UrlScript($routerUrl, '/');
-
-		\Closure::bind(function () use ($request, $url): void {
-			/** @var Request $this */
-			$this->headers = $request->getHeaders() + $this->headers;
-			if ($request->isAjax()) {
-				$this->headers['x-requested-with'] = 'XMLHttpRequest';
-			} else {
-				unset($this->headers['x-requested-with']);
-			}
-			$this->post = $request->getPost();
-			$this->url = $url;
-			$this->method = ($request->getPost() !== [] || $request->getRawBody() !== NULL) ? 'POST' : 'GET';
-			$this->cookies = $request->getCookies() + $this->cookies;
-			$this->rawBodyCallback = [$request, 'getRawBody'];
-		}, $this->httpRequest, Request::class)();
 	}
 
 

@@ -12,11 +12,11 @@ parameters:
 			count: 1
 
 		-
-			message: '#Forrest79\\PresenterTester\\Mocks\\Http\\Session::__construct\(\) does not call parent constructor from Nette\\Http\\Session\.#'
-			path: %rootDir%/../../../src/Mocks/Http/Session.php
+			message: '#Property Forrest79\\PresenterTester\\TestPresenterResult::\$textResponseSource \(string\|null\) does not accept mixed\.#'
+			path: %rootDir%/../../../src/TestPresenterResult.php
 			count: 1
 
 		-
-			message: '#Parameter \#3 \$expire \(DateTimeInterface\|int\|string\) of method Forrest79\\PresenterTester\\Mocks\\Http\\Response::setCookie\(\) should be contravariant with parameter \$expire \(int\|null\) of method Nette\\Http\\IResponse::setCookie\(\)#'
-			path: %rootDir%/../../../src/Mocks/Http/Response.php
+			message: '#Forrest79\\PresenterTester\\Mocks\\Http\\Session::__construct\(\) does not call parent constructor from Nette\\Http\\Session\.#'
+			path: %rootDir%/../../../src/Mocks/Http/Session.php
 			count: 1

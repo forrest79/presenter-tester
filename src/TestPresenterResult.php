@@ -108,8 +108,9 @@ class TestPresenterResult
 			} else {
 				throw new \RuntimeException('No string type in text response.');
 			}
-			Assert::type('string', $this->textResponseSource);
+			assert(is_string($this->textResponseSource));
 		}
+
 		return $this->textResponseSource;
 	}
 
@@ -253,6 +254,7 @@ class TestPresenterResult
 
 			$errorsStr = [];
 			foreach ($form->getOwnErrors() as $error) {
+				assert(is_string($error));
 				$errorsStr[] = "\town error: " . $error;
 			}
 
@@ -260,6 +262,7 @@ class TestPresenterResult
 				assert($control instanceof Component && $control instanceof Control);
 				$errors = $control->getErrors();
 				foreach ($errors as $error) {
+					assert(is_string($error));
 					$errorsStr[] = "\t" . $control->lookupPath(Form::class) . ': ' . $error;
 				}
 			}
