@@ -63,6 +63,38 @@ After the test request is configured, you pass it to `execute` method, which per
 
 The `TestPresenterResult` contains many useful assert functions like render check or form validity check. In our example there is `assertRenders` method, which asserts that presenter returns `TextResponse` and that the text contains a given pattern. You probably already know the pattern format from [Tester\Assert::match()](https://tester.nette.org/en/writing-tests#toc-assert-match) function.
 
+### Sample test DI setup
+
+For newer `Nette\Http` with readonly properties, you must define also `Forrest79\PresenterTester\HttpRequestFactory` in your test DI. You can set some common properties here:
+
+```yaml
+parameters:
+	url: 'https://local.test/'
+
+services:
+    - Forrest79\PresenterTester\HttpRequestFactory(
+        remoteAddress: %tests.remoteAddress% # dynamic parameter
+    )
+    - Forrest79\PresenterTester\PresenterTester(
+        baseUrl: %url%
+    )
+    http.response:
+        factory: Forrest79\PresenterTester\Mocks\Http\Response
+        alteration: true
+    session.session:
+        factory: Forrest79\PresenterTester\Mocks\Http\Session
+        alteration: true
+
+database:
+    config:
+        password: %database.password% # dynamic parameter
+        dbname: %database.dbname% # dynamic parameter
+
+di:
+    export:
+        types: true
+```
+
 ## Helpers
 
 ### MemorySessionHandler
@@ -80,6 +112,8 @@ Or use mocked `Session`.
 > Some mocks are taken from https://github.com/mangoweb-backend/tester-http-mocks
 
 ### Http\Request
+
+> This is not working for actual `Nette\Http` with readonly properties. You can use `Forrest79\PresenterTester\Mocks\Http\Request` as simple mock but not as `Nette\Http\Request` in your test request. `Forrest79\PresenterTester\HttpRequestFactory` must be defined in your test DI.
 
 To correct set SameSite cookie you need to redefine `Http\Request` for testing. You can use the original one from Nette:
 

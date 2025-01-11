@@ -8,8 +8,8 @@ use Nette\Application\IPresenter;
 use Nette\Application\IPresenterFactory;
 use Nette\Application\Request as AppRequest;
 use Nette\Application\UI\Presenter;
+use Nette\DI;
 use Nette\Http\IRequest;
-use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\UrlScript;
 use Nette\Routing\Router;
@@ -19,17 +19,19 @@ use Nette\Utils\Arrays;
 
 class PresenterTester
 {
-	private Application $application;
-
 	private Session $session;
 
 	private IPresenterFactory $presenterFactory;
 
 	private Router $router;
 
+	private HttpRequestFactory $httpRequestFactory;
+
 	private string $baseUrl;
 
 	private User $user;
+
+	private DI\Container $container;
 
 	/** @var array<PresenterTesterListener> */
 	private array $listeners;
@@ -46,21 +48,23 @@ class PresenterTester
 	 */
 	public function __construct(
 		string $baseUrl,
-		Application $application,
 		Session $session,
 		IPresenterFactory $presenterFactory,
 		Router $router,
+		HttpRequestFactory $httpRequestFactory,
 		User $user,
+		DI\Container $container,
 		array $listeners = [],
 		callable|NULL $identityFactory = NULL,
 	)
 	{
 		$this->baseUrl = $baseUrl;
-		$this->application = $application;
 		$this->session = $session;
 		$this->presenterFactory = $presenterFactory;
 		$this->router = $router;
+		$this->httpRequestFactory = $httpRequestFactory;
 		$this->user = $user;
+		$this->container = $container;
 		$this->listeners = $listeners;
 		$this->identityFactory = $identityFactory;
 	}
@@ -71,23 +75,29 @@ class PresenterTester
 		foreach ($this->listeners as $listener) {
 			$testRequest = $listener->onRequest($testRequest);
 		}
+
+		$this->setupHttpRequest($testRequest);
+
+		$this->loginUser($testRequest);
+
+		$presenter = $this->createPresenter($testRequest);
+
+		$application = $this->container->getByType(Application::class);
 		$applicationRequest = self::createApplicationRequest($testRequest);
 
 		// Inject application request into private Application::$requests
 		if ($testRequest->getInjectedRequest()) {
 			(function () use ($applicationRequest): void {
 				$this->requests = [$applicationRequest];
-			})->call($this->application);
+			})->call($application);
 		}
 
-		$httpRequest = $this->createHttpRequest($testRequest);
-		$presenter = $this->createPresenter($testRequest);
 		if ($applicationRequest->getMethod() === 'GET') {
-			$params = $this->router->match($httpRequest);
+			$params = $this->router->match($this->container->getByType(IRequest::class));
 			PresenterAssert::assertRequestMatch($applicationRequest, $params);
 		}
 
-		Arrays::invoke($this->application->onRequest, $this->application, $applicationRequest);
+		Arrays::invoke($application->onRequest, $application, $applicationRequest);
 
 		$badRequestException = NULL;
 
@@ -123,35 +133,8 @@ class PresenterTester
 	}
 
 
-	protected function createHttpRequest(TestPresenterRequest $request): IRequest
-	{
-		$appRequest = self::createApplicationRequest($request);
-		$refUrl = new UrlScript($this->baseUrl, '/');
-
-		$routerUrl = $this->router->constructUrl($appRequest->toArray(), $refUrl);
-		assert(is_string($routerUrl));
-
-		$headers = $request->getHeaders();
-		if ($request->isAjax()) {
-			$headers['x-requested-with'] = 'XMLHttpRequest';
-		} else {
-			unset($headers['x-requested-with']);
-		}
-
-		return new Request(
-			url: new UrlScript($routerUrl, '/'),
-			post: $request->getPost(),
-			cookies: $request->getCookies(),
-			headers: $headers,
-			method: ($request->getPost() !== [] || $request->getRawBody() !== NULL) ? 'POST' : 'GET',
-			rawBodyCallback: static fn (): string|NULL => $request->getRawBody(),
-		);
-	}
-
-
 	protected function createPresenter(TestPresenterRequest $request): IPresenter
 	{
-		$this->loginUser($request);
 		$presenter = $this->presenterFactory->createPresenter($request->getPresenterName());
 		if ($presenter instanceof Presenter) {
 			$this->setupUIPresenter($presenter);
@@ -194,6 +177,33 @@ class PresenterTester
 		if ($identity !== NULL) {
 			$this->user->login($identity);
 		}
+	}
+
+
+	protected function setupHttpRequest(TestPresenterRequest $request): void
+	{
+		$appRequest = self::createApplicationRequest($request);
+		$refUrl = new UrlScript($this->baseUrl, '/');
+
+		$routerUrl = $this->router->constructUrl($appRequest->toArray(), $refUrl);
+		assert(is_string($routerUrl));
+
+		$headers = $request->getHeaders();
+		if ($request->isAjax()) {
+			$headers['x-requested-with'] = 'XMLHttpRequest';
+		} else {
+			unset($headers['x-requested-with']);
+		}
+
+		$this->container->removeService('http.request');
+		$this->container->addService('http.request', $this->httpRequestFactory->create(
+			$request->getPost() !== [] || $request->getRawBody() !== NULL ? 'POST' : 'GET',
+			new UrlScript($routerUrl, '/'),
+			$request->getPost(),
+			$request->getCookies(),
+			$headers,
+			static fn (): string|NULL => $request->getRawBody(),
+		));
 	}
 
 
