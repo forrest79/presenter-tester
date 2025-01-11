@@ -65,7 +65,7 @@ The `TestPresenterResult` contains many useful assert functions like render chec
 
 ### Sample test DI setup
 
-For newer `Nette\Http` with readonly properties, you must define also `Forrest79\PresenterTester\HttpRequestFactory` in your test DI. You can set some common properties here:
+For newer `Nette\Http` with readonly properties, you must define also `Forrest79\PresenterTester\HttpRequestFactory` in your test DI (if you use some own `Nette\Http\IRequest` implementation with a different constructor from the `Nette\Http\Request` you must extend `Forrest79\PresenterTester\HttpRequestFactory` and return your object that implements `Nette\Http\IRequest` interface). You can set some common properties here:
 
 ```yaml
 parameters:

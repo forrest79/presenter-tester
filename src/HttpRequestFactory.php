@@ -6,6 +6,8 @@ use Nette\Http;
 
 class HttpRequestFactory
 {
+	protected readonly Http\IRequest $httpRequest;
+
 	/** @var array<string, mixed> */
 	protected readonly array $cookies;
 
@@ -22,12 +24,14 @@ class HttpRequestFactory
 	 * @param array<string, string> $headers
 	 */
 	public function __construct(
+		Http\IRequest $httpRequest,
 		array $cookies = [],
 		array $headers = [],
 		string|NULL $remoteAddress = NULL,
 		string|NULL $remoteHost = NULL,
 	)
 	{
+		$this->httpRequest = $httpRequest;
 		$this->cookies = array_merge($cookies, [Http\Helpers::StrictCookieName => TRUE]);
 		$this->headers = $headers;
 		$this->remoteAddress = $remoteAddress;
@@ -47,9 +51,10 @@ class HttpRequestFactory
 		array $cookies,
 		array $headers,
 		callable $rawBodyCallback,
-	): Http\Request
+	): Http\IRequest
 	{
-		return new Http\Request(
+		$httpRequestClassName = $this->httpRequest::class;
+		return new $httpRequestClassName(
 			$url,
 			$post,
 			[],
