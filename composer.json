@@ -11,7 +11,7 @@
 		"nette/tester": "^2.5"
 	},
 	"require-dev": {
-		"forrest79/phpcs": "^1.5",
+		"forrest79/phpcs": "^1.7",
 		"forrest79/phpcs-ignores": "^0.5",
 		"nette/di": "^3.0",
 		"nette/mail": "^3.0 | ^4.0",
