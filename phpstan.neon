@@ -1,22 +1,56 @@
 includes:
 	- vendor/phpstan/phpstan-strict-rules/rules.neon
+	- vendor/shipmonk/phpstan-rules/rules.neon
 
 parameters:
 	level: max
+
 	universalObjectCratesClasses:
 		- Nette\Http\SessionSection
+
+	shipmonkRules:
+		enforceReadonlyPublicProperty:
+			enabled: false
+
 	ignoreErrors:
 		-
-			message: '#Call to an undefined method object\:\:__toString\(\)\.#'
-			path: %rootDir%/../../../src/TestPresenterResult.php
+			message: '#^Forrest79\\PresenterTester\\Mocks\\Http\\Session\:\:__construct\(\) does not call parent constructor from Nette\\Http\\Session\.$#'
+			identifier: constructor.missingParentCall
 			count: 1
+			path: src/Mocks/Http/Session.php
 
 		-
-			message: '#Property Forrest79\\PresenterTester\\TestPresenterResult::\$textResponseSource \(string\|null\) does not accept mixed\.#'
-			path: %rootDir%/../../../src/TestPresenterResult.php
+			message: '#^Overwriting variable \$expectedParameter while changing its type from bool\|float\|int to string$#'
+			identifier: shipmonk.variableTypeOverwritten
 			count: 1
+			path: src/PresenterAssert.php
 
 		-
-			message: '#Forrest79\\PresenterTester\\Mocks\\Http\\Session::__construct\(\) does not call parent constructor from Nette\\Http\\Session\.#'
-			path: %rootDir%/../../../src/Mocks/Http/Session.php
+			message: '#^Call to an undefined method object\:\:__toString\(\)\.$#'
+			identifier: method.notFound
 			count: 1
+			path: src/TestPresenterResult.php
+
+		-
+			message: '#^Overwriting variable \$match while changing its type from array\<int, string\> to string$#'
+			identifier: shipmonk.variableTypeOverwritten
+			count: 1
+			path: src/TestPresenterResult.php
+
+		-
+			message: '#^Overwriting variable \$matches while changing its type from string to array\<int, string\>$#'
+			identifier: shipmonk.variableTypeOverwritten
+			count: 1
+			path: src/TestPresenterResult.php
+
+		-
+			message: '#^Property Forrest79\\PresenterTester\\TestPresenterResult\:\:\$textResponseSource \(string\|null\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/TestPresenterResult.php
+
+		-
+			message: '#^The @param \$formErrors phpdoc does not contain null, but native return type does$#'
+			identifier: shipmonk.phpDocNullabilityMismatch
+			count: 1
+			path: src/TestPresenterResult.php
