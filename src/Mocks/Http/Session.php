@@ -9,9 +9,9 @@ class Session extends Http\Session
 	/** @var array<string, SessionSection> */
 	private array $sections = [];
 
-	private bool $started = FALSE;
+	private bool $started = false;
 
-	private bool $exists = FALSE;
+	private bool $exists = false;
 
 	private string $id;
 
@@ -24,7 +24,7 @@ class Session extends Http\Session
 
 	public function start(): void
 	{
-		$this->started = TRUE;
+		$this->started = true;
 	}
 
 
@@ -42,13 +42,13 @@ class Session extends Http\Session
 
 	public function close(): void
 	{
-		$this->started = FALSE;
+		$this->started = false;
 	}
 
 
 	public function destroy(): void
 	{
-		$this->started = FALSE;
+		$this->started = false;
 	}
 
 
@@ -146,7 +146,7 @@ class Session extends Http\Session
 	}
 
 
-	public function setExpiration(string|NULL $time): static
+	public function setExpiration(string|null $time): static
 	{
 		return $this;
 	}
@@ -154,9 +154,9 @@ class Session extends Http\Session
 
 	public function setCookieParameters(
 		string $path,
-		string|NULL $domain = NULL,
-		bool|NULL $secure = NULL,
-		string|NULL $sameSite = NULL,
+		string|null $domain = null,
+		bool|null $secure = null,
+		string|null $sameSite = null,
 	): static
 	{
 		return $this;

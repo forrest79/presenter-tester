@@ -10,18 +10,18 @@ class PresenterAssert
 {
 
 	/**
-	 * @param array<mixed>|NULL $actual
+	 * @param array<mixed>|null $actual
 	 */
 	public static function assertRequestMatch(
 		Request $expected,
-		array|NULL $actual,
-		bool $onlyIntersectedParameters = TRUE,
+		array|null $actual,
+		bool $onlyIntersectedParameters = true,
 	): void
 	{
-		Assert::notSame(NULL, $actual);
-		assert($actual !== NULL);
+		Assert::notSame(null, $actual);
+		assert($actual !== null);
 
-		$presenter = $actual[UI\Presenter::PRESENTER_KEY] ?? NULL;
+		$presenter = $actual[UI\Presenter::PRESENTER_KEY] ?? null;
 		Assert::same($expected->getPresenterName(), $presenter);
 		unset($actual[UI\Presenter::PRESENTER_KEY]);
 
