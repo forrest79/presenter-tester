@@ -4,7 +4,7 @@ namespace Forrest79\PresenterTester\Helpers;
 
 class MemorySessionHandler implements \SessionHandlerInterface
 {
-	private static bool $installed = FALSE;
+	private static bool $installed = false;
 
 	/** @var array<string, string> */
 	private array $sessionData = [];
@@ -12,7 +12,7 @@ class MemorySessionHandler implements \SessionHandlerInterface
 
 	public function open(string $path, string $name): bool
 	{
-		return TRUE;
+		return true;
 	}
 
 
@@ -29,24 +29,24 @@ class MemorySessionHandler implements \SessionHandlerInterface
 	public function write(string $id, string $data): bool
 	{
 		if (!isset($this->sessionData[$id])) {
-			return FALSE;
+			return false;
 		}
 
 		$this->sessionData[$id] = $data;
 
-		return TRUE;
+		return true;
 	}
 
 
 	public function destroy(string $id): bool
 	{
 		if (!isset($this->sessionData[$id])) {
-			return FALSE;
+			return false;
 		}
 
 		unset($this->sessionData[$id]);
 
-		return TRUE;
+		return true;
 	}
 
 
@@ -56,11 +56,11 @@ class MemorySessionHandler implements \SessionHandlerInterface
 			unset($this->sessionData[$id]);
 		}
 
-		return TRUE;
+		return true;
 	}
 
 
-	public function gc(int $maxLifeTime): int|FALSE
+	public function gc(int $maxLifeTime): int|false
 	{
 		return 300;
 	}
@@ -69,8 +69,8 @@ class MemorySessionHandler implements \SessionHandlerInterface
 	public static function install(): void
 	{
 		if (!self::$installed) {
-			session_set_save_handler(new self(), TRUE);
-			self::$installed = TRUE;
+			session_set_save_handler(new self(), true);
+			self::$installed = true;
 		}
 	}
 

@@ -19,10 +19,10 @@ class Response implements Http\IResponse
 	public string $cookiePath = '/';
 
 	/** This is used by Nette DI itself */
-	public bool $cookieSecure = FALSE;
+	public bool $cookieSecure = false;
 
 
-	public function setCode(int $code, string|NULL $reason = NULL): static
+	public function setCode(int $code, string|null $reason = null): static
 	{
 		return $this;
 	}
@@ -46,7 +46,7 @@ class Response implements Http\IResponse
 	}
 
 
-	public function setContentType(string $type, string|NULL $charset = NULL): static
+	public function setContentType(string $type, string|null $charset = null): static
 	{
 		return $this;
 	}
@@ -57,7 +57,7 @@ class Response implements Http\IResponse
 	}
 
 
-	public function setExpiration(string|NULL $expire): static
+	public function setExpiration(string|null $expire): static
 	{
 		return $this;
 	}
@@ -65,13 +65,13 @@ class Response implements Http\IResponse
 
 	public function isSent(): bool
 	{
-		return FALSE;
+		return false;
 	}
 
 
-	public function getHeader(string $header): string|NULL
+	public function getHeader(string $header): string|null
 	{
-		return NULL;
+		return null;
 	}
 
 
@@ -87,12 +87,12 @@ class Response implements Http\IResponse
 	public function setCookie(
 		string $name,
 		string $value,
-		string|int|\DateTimeInterface|NULL $expire,
-		string|NULL $path = NULL,
-		string|NULL $domain = NULL,
-		bool|NULL $secure = NULL,
-		bool|NULL $httpOnly = NULL,
-		string|NULL $sameSite = NULL,
+		string|int|\DateTimeInterface|null $expire,
+		string|null $path = null,
+		string|null $domain = null,
+		bool|null $secure = null,
+		bool|null $httpOnly = null,
+		string|null $sameSite = null,
 	): static
 	{
 		$this->cookies[$name] = $value;
@@ -102,9 +102,9 @@ class Response implements Http\IResponse
 
 	public function deleteCookie(
 		string $name,
-		string|NULL $path = NULL,
-		string|NULL $domain = NULL,
-		bool|NULL $secure = NULL,
+		string|null $path = null,
+		string|null $domain = null,
+		bool|null $secure = null,
 	): void
 	{
 		unset($this->cookies[$name]);

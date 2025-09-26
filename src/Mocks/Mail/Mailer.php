@@ -31,12 +31,12 @@ final class Mailer implements Mail\Mailer, \Countable
 	}
 
 
-	public function getLastMessage(): Mail\Message|NULL
+	public function getLastMessage(): Mail\Message|null
 	{
 		$key = array_key_last($this->messages);
 
-		if ($key === NULL) {
-			return NULL;
+		if ($key === null) {
+			return null;
 		}
 
 		return $this->messages[$key];

@@ -9,16 +9,16 @@ class Request extends Http\Request
 	/** @var array<string, string> */
 	private array $headers = [];
 
-	private string|NULL $body = NULL;
+	private string|null $body = null;
 
 
-	public function setRawBody(string|NULL $body): void
+	public function setRawBody(string|null $body): void
 	{
 		$this->body = $body;
 	}
 
 
-	public function getRawBody(): string|NULL
+	public function getRawBody(): string|null
 	{
 		return $this->body ?? parent::getRawBody();
 	}
@@ -30,7 +30,7 @@ class Request extends Http\Request
 	}
 
 
-	public function getHeader(string $header): string|NULL
+	public function getHeader(string $header): string|null
 	{
 		if (isset($this->headers[$header])) {
 			return $this->headers[$header];
@@ -52,7 +52,7 @@ class Request extends Http\Request
 
 	public function isSameSite(): bool
 	{
-		return TRUE;
+		return true;
 	}
 
 }

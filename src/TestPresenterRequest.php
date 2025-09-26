@@ -17,7 +17,7 @@ class TestPresenterRequest
 
 	private string $presenterName;
 
-	private PresenterTester|NULL $presenterTester;
+	private PresenterTester|null $presenterTester;
 
 	private string $methodName = 'GET';
 
@@ -30,7 +30,7 @@ class TestPresenterRequest
 	/** @var array<string, mixed> */
 	private array $post = [];
 
-	private string|NULL $rawBody = NULL;
+	private string|null $rawBody = null;
 
 	/** @var array<string, string> */
 	private array $cookies = [];
@@ -38,18 +38,18 @@ class TestPresenterRequest
 	/** @var array<string, mixed> */
 	private array $files = [];
 
-	private bool $ajax = FALSE;
+	private bool $ajax = false;
 
-	private bool $shouldHaveIdentity = FALSE;
+	private bool $shouldHaveIdentity = false;
 
-	private IIdentity|NULL $identity = NULL;
+	private IIdentity|null $identity = null;
 
-	private bool $keepIdentity = FALSE;
+	private bool $keepIdentity = false;
 
-	private bool $injectedRequest = FALSE;
+	private bool $injectedRequest = false;
 
 
-	public function __construct(string $presenterName, Session $session, PresenterTester|NULL $presenterTester = NULL)
+	public function __construct(string $presenterName, Session $session, PresenterTester|null $presenterTester = null)
 	{
 		$this->presenterName = $presenterName;
 		$this->session = $session;
@@ -98,7 +98,7 @@ class TestPresenterRequest
 	}
 
 
-	public function getRawBody(): string|NULL
+	public function getRawBody(): string|null
 	{
 		return $this->rawBody;
 	}
@@ -134,7 +134,7 @@ class TestPresenterRequest
 	}
 
 
-	public function getIdentity(): IIdentity|NULL
+	public function getIdentity(): IIdentity|null
 	{
 		return $this->identity;
 	}
@@ -161,7 +161,7 @@ class TestPresenterRequest
 		$request = clone $this;
 		$request->parameters['do'] = $signal;
 		$lastDashPosition = strrpos($signal, '-');
-		$componentName = $lastDashPosition !== FALSE ? substr($signal, 0, $lastDashPosition) : '';
+		$componentName = $lastDashPosition !== false ? substr($signal, 0, $lastDashPosition) : '';
 
 		if ($componentName !== '') {
 			$newParameters = [];
@@ -190,7 +190,7 @@ class TestPresenterRequest
 	 * @param array<string, mixed> $post
 	 * @param array<string, mixed> $files
 	 */
-	public function withForm(string $formName, array $post, array $files = [], bool $withProtection = TRUE): self
+	public function withForm(string $formName, array $post, array $files = [], bool $withProtection = true): self
 	{
 		$request = $this->withSignal($formName . '-submit');
 		if ($withProtection) {
@@ -198,7 +198,7 @@ class TestPresenterRequest
 
 			$random = 'abcdefghij';
 			// The same logic as vendor/nette/forms/src/Forms/Controls/CsrfProtection.php::generateToken(...)
-			$token = $random . base64_encode(sha1((self::CSRF_TOKEN ^ $this->session->getId()) . $random, TRUE));
+			$token = $random . base64_encode(sha1((self::CSRF_TOKEN ^ $this->session->getId()) . $random, true));
 			$post += ['_token_' => $token];
 		}
 		$request->post = $post;
@@ -229,7 +229,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withAjax(bool $enable = TRUE): self
+	public function withAjax(bool $enable = true): self
 	{
 		$request = clone $this;
 		$request->ajax = $enable;
@@ -286,17 +286,17 @@ class TestPresenterRequest
 	}
 
 
-	public function withIdentity(IIdentity|NULL $identity = NULL): self
+	public function withIdentity(IIdentity|null $identity = null): self
 	{
 		$request = clone $this;
-		$request->shouldHaveIdentity = TRUE;
+		$request->shouldHaveIdentity = true;
 		$request->identity = $identity;
 
 		return $request;
 	}
 
 
-	public function withKeepIdentity(bool $enable = TRUE): self
+	public function withKeepIdentity(bool $enable = true): self
 	{
 		$request = clone $this;
 		$request->keepIdentity = $enable;
@@ -305,7 +305,7 @@ class TestPresenterRequest
 	}
 
 
-	public function withInjectedRequest(bool $enable = TRUE): self
+	public function withInjectedRequest(bool $enable = true): self
 	{
 		$request = clone $this;
 		$request->injectedRequest = $enable;
@@ -316,7 +316,7 @@ class TestPresenterRequest
 
 	public function execute(): TestPresenterResult
 	{
-		if ($this->presenterTester === NULL) {
+		if ($this->presenterTester === null) {
 			throw new \RuntimeException('Presenter tester is not set.');
 		}
 		return $this->presenterTester->execute($this);

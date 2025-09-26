@@ -36,7 +36,7 @@ class PresenterTester
 	/** @var array<PresenterTesterListener> */
 	private array $listeners;
 
-	/** @var callable|NULL */
+	/** @var callable|null */
 	private $identityFactory;
 
 	/** @var list<TestPresenterResult> */
@@ -55,7 +55,7 @@ class PresenterTester
 		User $user,
 		DI\Container $container,
 		array $listeners = [],
-		callable|NULL $identityFactory = NULL,
+		callable|null $identityFactory = null,
 	)
 	{
 		$this->baseUrl = $baseUrl;
@@ -99,13 +99,13 @@ class PresenterTester
 
 		Arrays::invoke($application->onRequest, $application, $applicationRequest);
 
-		$badRequestException = NULL;
+		$badRequestException = null;
 
 		try {
 			$response = $presenter->run($applicationRequest);
 		} catch (BadRequestException $e) {
 			$badRequestException = $e;
-			$response = NULL;
+			$response = null;
 		}
 
 		$result = new TestPresenterResult($this->router, $applicationRequest, $presenter, $response, $badRequestException);
@@ -162,10 +162,10 @@ class PresenterTester
 			return;
 		}
 
-		$this->user->logout(TRUE);
+		$this->user->logout(true);
 		$identity = $request->getIdentity();
-		if ($identity === NULL && $request->shouldHaveIdentity()) {
-			if ($this->identityFactory === NULL) {
+		if ($identity === null && $request->shouldHaveIdentity()) {
+			if ($this->identityFactory === null) {
 				throw new \LogicException('identityFactory is not set');
 			}
 			$identity = ($this->identityFactory)($request);
@@ -174,7 +174,7 @@ class PresenterTester
 			}
 		}
 
-		if ($identity !== NULL) {
+		if ($identity !== null) {
 			$this->user->login($identity);
 		}
 	}
@@ -197,19 +197,19 @@ class PresenterTester
 
 		$this->container->removeService('http.request');
 		$this->container->addService('http.request', $this->httpRequestFactory->create(
-			$request->getPost() !== [] || $request->getRawBody() !== NULL ? 'POST' : 'GET',
+			$request->getPost() !== [] || $request->getRawBody() !== null ? 'POST' : 'GET',
 			new UrlScript($routerUrl, '/'),
 			$request->getPost(),
 			$request->getCookies(),
 			$headers,
-			static fn (): string|NULL => $request->getRawBody(),
+			static fn (): string|null => $request->getRawBody(),
 		));
 	}
 
 
 	protected function setupUIPresenter(Presenter $presenter): void
 	{
-		$presenter->autoCanonicalize = FALSE;
+		$presenter->autoCanonicalize = false;
 		$presenter->invalidLinkMode = Presenter::INVALID_LINK_EXCEPTION;
 	}
 

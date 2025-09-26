@@ -57,28 +57,28 @@ class SessionSection extends Http\SessionSection
 
 
 	/**
-	 * @param string|array<string>|NULL $variables
+	 * @param string|array<string>|null $variables
 	 */
-	public function setExpiration(string|NULL $expire, string|array|NULL $variables = NULL): static
+	public function setExpiration(string|null $expire, string|array|null $variables = null): static
 	{
 		return $this;
 	}
 
 
 	/**
-	 * @param string|array<string>|NULL $variables
+	 * @param string|array<string>|null $variables
 	 */
-	public function removeExpiration(string|array|NULL $variables = NULL): void
+	public function removeExpiration(string|array|null $variables = null): void
 	{
 	}
 
 
 	/**
-	 * @param string|array<string>|NULL $name
+	 * @param string|array<string>|null $name
 	 */
-	public function remove(string|array|NULL $name = NULL): void
+	public function remove(string|array|null $name = null): void
 	{
-		if ($name === NULL) {
+		if ($name === null) {
 			$this->data = [];
 		} else {
 			if (is_array($name)) {

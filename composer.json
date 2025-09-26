@@ -11,12 +11,13 @@
 		"nette/tester": "^2.5"
 	},
 	"require-dev": {
-		"forrest79/phpcs": "^1.5",
-		"forrest79/phpcs-ignores": "^0.5",
+		"forrest79/phpcs": "^2.3",
+		"forrest79/phpcs-ignores": "^0.6",
 		"nette/di": "^3.0",
 		"nette/mail": "^3.0 | ^4.0",
 		"phpstan/phpstan": "^2.1",
-		"phpstan/phpstan-strict-rules": "^2.0"
+		"phpstan/phpstan-strict-rules": "^2.0",
+		"shipmonk/phpstan-rules": "^4.2"
 	},
 	"autoload": {
 		"psr-4": {
@@ -24,7 +25,7 @@
 		}
 	},
 	"scripts": {
-		"phpcs": "vendor/bin/phpcs --bootstrap=vendor/forrest79/phpcs-ignores/src/bootstrap-outdated.php -s src",
+		"phpcs": "vendor/bin/phpcs --bootstrap=vendor/forrest79/phpcs-ignores/src/bootstrap-outdated.php -q -s src",
 		"phpstan": "vendor/bin/phpstan analyse src"
 	},
 	"config": {

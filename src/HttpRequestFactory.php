@@ -14,9 +14,9 @@ class HttpRequestFactory
 	/** @var array<string, string> */
 	protected readonly array $headers;
 
-	protected readonly string|NULL $remoteAddress;
+	protected readonly string|null $remoteAddress;
 
-	protected readonly string|NULL $remoteHost;
+	protected readonly string|null $remoteHost;
 
 
 	/**
@@ -27,12 +27,12 @@ class HttpRequestFactory
 		Http\IRequest $httpRequest,
 		array $cookies = [],
 		array $headers = [],
-		string|NULL $remoteAddress = NULL,
-		string|NULL $remoteHost = NULL,
+		string|null $remoteAddress = null,
+		string|null $remoteHost = null,
 	)
 	{
 		$this->httpRequest = $httpRequest;
-		$this->cookies = array_merge($cookies, [Http\Helpers::StrictCookieName => TRUE]);
+		$this->cookies = array_merge($cookies, [Http\Helpers::StrictCookieName => true]);
 		$this->headers = $headers;
 		$this->remoteAddress = $remoteAddress;
 		$this->remoteHost = $remoteHost;
