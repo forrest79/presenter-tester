@@ -19,6 +19,8 @@ class TestPresenterRequest
 
 	private PresenterTester|null $presenterTester;
 
+	private string|null $baseUrl = null;
+
 	private string $methodName = 'GET';
 
 	/** @var array<string, string> */
@@ -56,6 +58,12 @@ class TestPresenterRequest
 		$this->presenterTester = $presenterTester;
 
 		$session->getSection(CsrfProtection::class)->set('token', self::CSRF_TOKEN);
+	}
+
+
+	public function getBaseUrl(): string|null
+	{
+		return $this->baseUrl;
 	}
 
 
@@ -149,6 +157,15 @@ class TestPresenterRequest
 	public function getInjectedRequest(): bool
 	{
 		return $this->injectedRequest;
+	}
+
+
+	public function withBaseUrl(string $baseUrl): self
+	{
+		$request = clone $this;
+		$request->baseUrl = $baseUrl;
+
+		return $request;
 	}
 
 

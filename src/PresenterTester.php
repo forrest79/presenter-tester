@@ -183,7 +183,7 @@ class PresenterTester
 	protected function setupHttpRequest(TestPresenterRequest $request): void
 	{
 		$appRequest = self::createApplicationRequest($request);
-		$refUrl = new UrlScript($this->baseUrl, '/');
+		$refUrl = new UrlScript($request->getBaseUrl() ?? $this->baseUrl, '/');
 
 		$routerUrl = $this->router->constructUrl($appRequest->toArray(), $refUrl);
 		assert(is_string($routerUrl));
