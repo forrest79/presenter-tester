@@ -26,6 +26,12 @@ parameters:
 			path: src/PresenterAssert.php
 
 		-
+			rawMessage: 'Parameter #1 $params of method Nette\Routing\Router::constructUrl() expects array<string, mixed>, array given.'
+			identifier: argument.type
+			count: 1
+			path: src/PresenterTester.php
+
+		-
 			message: '#^Call to an undefined method object\:\:__toString\(\)\.$#'
 			identifier: method.notFound
 			count: 1

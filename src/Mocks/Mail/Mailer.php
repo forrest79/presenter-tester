@@ -4,7 +4,7 @@ namespace Forrest79\PresenterTester\Mocks\Mail;
 
 use Nette\Mail;
 
-final class Mailer implements Mail\Mailer, \Countable
+class Mailer implements Mail\Mailer, \Countable
 {
 	/** @var list<Mail\Message> */
 	private array $messages = [];
