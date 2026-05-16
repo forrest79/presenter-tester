@@ -2,12 +2,10 @@
 
 namespace Forrest79\PresenterTester;
 
-use Nette\Application\Application;
+use Nette\Application;
 use Nette\Application\BadRequestException;
 use Nette\Application\IPresenter;
-use Nette\Application\IPresenterFactory;
-use Nette\Application\Request as AppRequest;
-use Nette\Application\UI\Presenter;
+use Nette\Application\UI;
 use Nette\DI;
 use Nette\Http\IRequest;
 use Nette\Http\Session;
@@ -15,13 +13,10 @@ use Nette\Http\UrlScript;
 use Nette\Routing\Router;
 use Nette\Security\IIdentity;
 use Nette\Security\User;
-use Nette\Utils\Arrays;
 
 class PresenterTester
 {
 	private Session $session;
-
-	private IPresenterFactory $presenterFactory;
 
 	private Router $router;
 
@@ -36,8 +31,8 @@ class PresenterTester
 	/** @var array<PresenterTesterListener> */
 	private array $listeners;
 
-	/** @var callable|null */
-	private $identityFactory;
+	/** @var \Closure(TestPresenterRequest): IIdentity|null */
+	private \Closure|null $identityFactory;
 
 	/** @var list<TestPresenterResult> */
 	private array $results = [];
@@ -45,22 +40,21 @@ class PresenterTester
 
 	/**
 	 * @param list<PresenterTesterListener> $listeners
+	 * @param \Closure(TestPresenterRequest): IIdentity|null $identityFactory
 	 */
 	public function __construct(
 		string $baseUrl,
 		Session $session,
-		IPresenterFactory $presenterFactory,
 		Router $router,
 		HttpRequestFactory $httpRequestFactory,
 		User $user,
 		DI\Container $container,
 		array $listeners = [],
-		callable|null $identityFactory = null,
+		\Closure|null $identityFactory = null,
 	)
 	{
 		$this->baseUrl = $baseUrl;
 		$this->session = $session;
-		$this->presenterFactory = $presenterFactory;
 		$this->router = $router;
 		$this->httpRequestFactory = $httpRequestFactory;
 		$this->user = $user;
@@ -80,38 +74,44 @@ class PresenterTester
 
 		$this->loginUser($testRequest);
 
-		$presenter = $this->createPresenter($testRequest);
+		$application = $this->container->getByType(Application\Application::class);
 
-		$application = $this->container->getByType(Application::class);
+		$application->onPresenter[] = static function (Application\Application $application, IPresenter $presenter): void {
+			if ($presenter instanceof UI\Presenter) {
+				self::setupUIPresenter($presenter);
+			}
+		};
+
+		$application->onResponse[] = static function (Application\Application $application, Application\Response $response): void {
+			throw new Exceptions\ResponseDataException($application->getPresenter(), $response);
+		};
+
 		$applicationRequest = self::createApplicationRequest($testRequest);
-
-		// Inject application request into private Application::$requests
-		if ($testRequest->getInjectedRequest()) {
-			(function () use ($applicationRequest): void {
-				$this->requests = [$applicationRequest];
-			})->call($application);
-		}
 
 		if ($applicationRequest->getMethod() === 'GET') {
 			$params = $this->router->match($this->container->getByType(IRequest::class));
 			PresenterAssert::assertRequestMatch($applicationRequest, $params);
 		}
 
-		Arrays::invoke($application->onRequest, $application, $applicationRequest);
-
+		$presenter = null;
+		$response = null;
 		$badRequestException = null;
 
 		try {
-			$response = $presenter->run($applicationRequest);
+			$application->processRequest($applicationRequest);
+		} catch (Exceptions\ResponseDataException $e) {
+			$presenter = $e->presenter;
+			$response = $e->response;
 		} catch (BadRequestException $e) {
 			$badRequestException = $e;
-			$response = null;
 		}
 
 		$result = new TestPresenterResult($this->router, $applicationRequest, $presenter, $response, $badRequestException);
+
 		foreach ($this->listeners as $listener) {
 			$listener->onResult($result);
 		}
+
 		$this->results[] = $result;
 
 		return $result;
@@ -133,20 +133,9 @@ class PresenterTester
 	}
 
 
-	protected function createPresenter(TestPresenterRequest $request): IPresenter
+	protected static function createApplicationRequest(TestPresenterRequest $testRequest): Application\Request
 	{
-		$presenter = $this->presenterFactory->createPresenter($request->getPresenterName());
-		if ($presenter instanceof Presenter) {
-			$this->setupUIPresenter($presenter);
-		}
-
-		return $presenter;
-	}
-
-
-	protected static function createApplicationRequest(TestPresenterRequest $testRequest): AppRequest
-	{
-		return new AppRequest(
+		return new Application\Request(
 			$testRequest->getPresenterName(),
 			$testRequest->getPost() !== [] ? 'POST' : $testRequest->getMethodName(),
 			$testRequest->getParameters(),
@@ -169,9 +158,6 @@ class PresenterTester
 				throw new \LogicException('identityFactory is not set');
 			}
 			$identity = ($this->identityFactory)($request);
-			if (!$identity instanceof IIdentity) {
-				throw new \LogicException('identityFactory is not returning IIdentity');
-			}
 		}
 
 		if ($identity !== null) {
@@ -207,10 +193,10 @@ class PresenterTester
 	}
 
 
-	protected function setupUIPresenter(Presenter $presenter): void
+	protected static function setupUIPresenter(UI\Presenter $presenter): void
 	{
 		$presenter->autoCanonicalize = false;
-		$presenter->invalidLinkMode = Presenter::INVALID_LINK_EXCEPTION;
+		$presenter->invalidLinkMode = UI\Presenter::InvalidLinkException;
 	}
 
 }

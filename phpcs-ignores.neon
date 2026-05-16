@@ -1,9 +1,15 @@
 ignoreErrors:
 	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
+		sniff: SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
+		message: Do not use public properties. Use method access instead.
+		count: 2
+		path: src/Exceptions/ResponseDataException.php
+
+	-
+		sniff: Forrest79CodingStandard.Exceptions.ExceptionDeclaration.NotChainable
+		message: Exception is not chainable. It must have optional \Throwable as last constructor argument and has "Response".
 		count: 1
-		path: src/Helpers/MemorySessionHandler.php
+		path: src/Exceptions/ResponseDataException.php
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
@@ -24,21 +30,9 @@ ignoreErrors:
 		path: src/Helpers/MemorySessionHandler.php
 
 	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
-		count: 1
-		path: src/Mocks/Http/Request.php
-
-	-
 		sniff: SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
 		message: Do not use public properties. Use method access instead.
 		count: 3
-		path: src/Mocks/Http/Response.php
-
-	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
-		count: 1
 		path: src/Mocks/Http/Response.php
 
 	-
@@ -126,12 +120,6 @@ ignoreErrors:
 		path: src/Mocks/Http/Response.php
 
 	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
-		count: 1
-		path: src/Mocks/Http/Session.php
-
-	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 		message: Unused parameter $domain.
 		count: 1
@@ -186,12 +174,6 @@ ignoreErrors:
 		path: src/Mocks/Http/Session.php
 
 	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
-		count: 1
-		path: src/Mocks/Http/SessionSection.php
-
-	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 		message: Unused parameter $expire.
 		count: 1
@@ -216,20 +198,8 @@ ignoreErrors:
 		path: src/Mocks/Http/SessionSection.php
 
 	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
-		count: 1
-		path: src/HttpRequestFactory.php
-
-	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
-		count: 1
-		path: src/PresenterAssert.php
-
-	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $application.
 		count: 1
 		path: src/PresenterTester.php
 
@@ -244,16 +214,3 @@ ignoreErrors:
 		message: Visibility must be declared on method "onResult"
 		count: 1
 		path: src/PresenterTesterListener.php
-
-	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
-		count: 1
-		path: src/TestPresenterRequest.php
-
-	-
-		sniff: SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
-		message: All classes should be declared using either the "abstract" or "final" keyword.
-		count: 1
-		path: src/TestPresenterResult.php
-

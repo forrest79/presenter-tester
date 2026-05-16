@@ -22,7 +22,7 @@ class TestPresenterResult
 {
 	private Router $router;
 
-	private IPresenter $presenter;
+	private IPresenter|null $presenter;
 
 	private Request $request;
 
@@ -38,7 +38,7 @@ class TestPresenterResult
 	public function __construct(
 		Router $router,
 		Request $request,
-		IPresenter $presenter,
+		IPresenter|null $presenter,
 		Response|null $response,
 		BadRequestException|null $badRequestException,
 	)
@@ -57,7 +57,7 @@ class TestPresenterResult
 	}
 
 
-	public function getPresenter(): IPresenter
+	public function getPresenter(): IPresenter|null
 	{
 		return $this->presenter;
 	}

@@ -9,6 +9,8 @@ parameters:
 		- Nette\Http\SessionSection
 
 	shipmonkRules:
+		forbidCheckedExceptionInCallable:
+			enabled: false
 		enforceReadonlyPublicProperty:
 			enabled: false
 

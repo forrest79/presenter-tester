@@ -11,7 +11,7 @@ use Nette\Security\IIdentity;
  */
 class TestPresenterRequest
 {
-	private const CSRF_TOKEN = 'test-token';
+	private const string CSRF_TOKEN = 'test-token';
 
 	private Session $session;
 
@@ -47,8 +47,6 @@ class TestPresenterRequest
 	private IIdentity|null $identity = null;
 
 	private bool $keepIdentity = false;
-
-	private bool $injectedRequest = false;
 
 
 	public function __construct(string $presenterName, Session $session, PresenterTester|null $presenterTester = null)
@@ -151,12 +149,6 @@ class TestPresenterRequest
 	public function getKeepIdentity(): bool
 	{
 		return $this->keepIdentity;
-	}
-
-
-	public function getInjectedRequest(): bool
-	{
-		return $this->injectedRequest;
 	}
 
 
@@ -317,15 +309,6 @@ class TestPresenterRequest
 	{
 		$request = clone $this;
 		$request->keepIdentity = $enable;
-
-		return $request;
-	}
-
-
-	public function withInjectedRequest(bool $enable = true): self
-	{
-		$request = clone $this;
-		$request->injectedRequest = $enable;
 
 		return $request;
 	}
