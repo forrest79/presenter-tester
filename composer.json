@@ -5,19 +5,19 @@
 	"license": "(BSD-3-Clause and MIT)",
 	"require": {
 		"php": "^8.3",
-		"nette/application": "^3.0",
-		"nette/security": "^3.0",
-		"nette/forms": "^3.0",
-		"nette/tester": "^2.5"
+		"nette/application": "^3.2",
+		"nette/security": "^3.2",
+		"nette/forms": "^3.2",
+		"nette/tester": "^2.6"
 	},
 	"require-dev": {
 		"forrest79/phpcs": "^2.3",
 		"forrest79/phpcs-ignores": "^0.6",
-		"nette/di": "^3.0",
-		"nette/mail": "^3.0 | ^4.0",
-		"phpstan/phpstan": "^2.1",
+		"nette/di": "^3.2",
+		"nette/mail": "^4.1",
+		"phpstan/phpstan": "^2.2",
 		"phpstan/phpstan-strict-rules": "^2.0",
-		"shipmonk/phpstan-rules": "^4.2"
+		"shipmonk/phpstan-rules": "^4.4"
 	},
 	"autoload": {
 		"psr-4": {
