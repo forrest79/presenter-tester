@@ -156,7 +156,7 @@ class Session extends Http\Session
 		string $path,
 		string|null $domain = null,
 		bool|null $secure = null,
-		string|null $sameSite = null,
+		Http\SameSite|string|null $sameSite = null,
 	): static
 	{
 		return $this;

@@ -79,6 +79,12 @@ ignoreErrors:
 
 	-
 		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+		message: Unused parameter $partitioned.
+		count: 1
+		path: src/Mocks/Http/Response.php
+
+	-
+		sniff: SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
 		message: Unused parameter $name.
 		count: 2
 		path: src/Mocks/Http/Response.php

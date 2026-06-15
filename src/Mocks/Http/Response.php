@@ -92,7 +92,8 @@ class Response implements Http\IResponse
 		string|null $domain = null,
 		bool|null $secure = null,
 		bool|null $httpOnly = null,
-		string|null $sameSite = null,
+		Http\SameSite|string|null $sameSite = null,
+		bool $partitioned = false,
 	): static
 	{
 		$this->cookies[$name] = $value;
